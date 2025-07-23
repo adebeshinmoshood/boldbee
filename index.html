@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bold bee // multifarm
+
+  </title>
+  <style>
+        /* Toggle (open) button */
+    #openBtn {
+      position: fixed;
+      top: 3vw;
+      color: white;
+      border: none;
+      background-color: brown;
+      margin-left: 85vw;
+      font-size: 30px;
+      cursor: pointer;
+      display: none;
+    
+    }
+
+    /* Sidebar container */
+    #sidebar {
+      position: fixed;
+      top: 50px; /* not from the very top */
+      right: 0;
+      width: 260px;
+      height: auto; /* just tall enough */
+      background-color: #e0e0e0; /* soft grey */
+      color: #333;
+      border-radius: 12px 0 0 12px;
+      box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    #sidebar.active {
+      transform: translateX(0);
+    }
+    
+    #sidebar.active {
+      transform: translateX(0);
+    }
+
+    /* Close button inside the sidebar */
+    #closeBtn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Sidebar links */
+    .sidebar-link {
+      display: block;
+      margin-top: 40px;
+      padding: 12px 16px;
+      background-color: brown;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.2s;
+      font-weight: 500;
+    }
+
+    .sidebar-link:hover {
+      background-color: #dcdcdc;
+    }
+  
+   
+   header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    background-color: white;
+    box-shadow:4px 4px 4px 4px solid white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+   }
+   header a{
+    color: black;
+    text-decoration: none;
+    font-size: 3vw;
+    font-weight: lighter;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    padding: 5px;
+  
+   }
+    
+.bbi{
+  width: 100vw;
+}
+   
+   body{
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    
+    overflow-x: hidden;
+    
+   }
+   .daa{
+    margin-top:300px;
+    scroll-behavior: smooth;
+   background-image: url("images/dddd.jpg");
+   width: 90vw;
+   height: 80vw;
+   background-repeat: no-repeat;
+   display: flex;
+   border-radius: 50px;
+   border: 5px solid white;
+   align-items: center;
+   justify-content: center;
+   background-size: cover;
+   
+     
+   }
+   
+    body{
+      
+      display: flex;
+      flex-direction: column;
+      background-image: url("images/aaaa.png");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      align-items: center;
+      width: 100vw;
+      background-size: cover;
+      gap: 50px;
+      scroll-behavior: auto;
+    
+      
+    }
+   .daa div{
+    font-size: 6vw;
+    font-weight: bolder;
+   }
+   .daa button{
+    background-color: white;
+     font-size: 4vw;
+     color: black;
+     margin-top: 300px;
+     border-radius: 10px;
+  }
+  .al{
+    display: flex;
+    gap: 2vw;
+    justify-content: space-between;
+    align-self: center;
+    padding-right: 55px;
+  }
+  .dad{
+    width: 20vw;
+  }
+  .gg{
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 2.5vw;
+    font-style: italic;
+    font-weight: bold;
+    width: 90vw;
+  }
+  .la{
+    display: flex;
+    gap: 20px;
+  }
+  .la div{
+    font-style: italic;
+  }
+.gg{
+  display: flex;
+  background-color: white;
+  height: 15vh;
+  border:5px solid brown;
+  align-items: center;
+
+}
+section{
+  width: 90vw;
+  padding: 10px;
+  
+}
+.intro{
+   
+   background-image: url("images/bbbb.png");
+   width: 90vw;
+   height: 80vw;
+   background-repeat: no-repeat;
+   display: flex;
+   border-radius: 50px;
+   border: 5px solid white;
+   align-items: center;
+   justify-content: center;
+   background-size: cover;
+   
+}
+.S{
+  color: #c3d500;
+  font-size: 4vw;
+}
+.ss{
+  color: white;
+  font-size: 4.5vw;
+}
+.sss{
+  font-size: 3vw;
+  color: white;
+}
+.ass{
+  display: flex;
+  align-items: center;
+  padding: 30px;
+}
+.as button{
+  font-size: 4vw;
+  background-color: white;
+}
+.as{ padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  gap: 20px;
+}
+.assd{
+  width: 30vw;
+  padding: 50px;
+}
+.position{
+  
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  
+
+}
+.pta{
+  width: 90vw;
+  background-color: white;
+  text-align: center;
+   padding: 10px;
+   border-radius: 50px;
+   height: auto;
+   border: 5px solid brown;
+ 
+   
+}
+.ta{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pt{
+  width: 28vw;
+  border: 3px solid brown;
+  height: 30vh;
+}
+.d1{
+  font-size: 5vw;
+  font-style: oblique;
+}
+.ptd{
+   background-image: url("images/llll.jpg");
+   width: 90vw;
+   height: 80vw;
+   background-repeat: no-repeat;
+   display: flex;
+   border-radius: 50px;
+   border: 5px solid white;
+   align-items: center;
+   justify-content: center;
+   background-size: cover;
+   color: white;
+   flex-direction: column;
+   gap: 30px;
+   
+}
+.ptd h1{
+   font-size: 5vw;
+}
+.ptsd{
+  font-size: 4vw;
+   
+}
+.aboutus{
+  height: auto;
+  width: 90vw;
+  border: 5px solid  white;
+  background-color: burlywood;
+  border-radius: 50px;
+  text-align: center;
+  
+}
+.aboutus h1{
+  font-size: 5vw;
+}
+.aboutus div{
+  font-size: 4vw;
+  font-style: italic;
+}
+.position div{
+  gap: 10px;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  gap: 50px;
+  padding-right: 2.5vw;
+  
+  
+}
+ .last div img{
+  width: 40vw;
+  height: 40vh;
+ }
+ .last{
+  background-color: brown;
+ }
+ .lasts{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+ .dan{
+   height: 10vh;
+ }
+  .lasts a{
+    font-size: 10vw;
+    text-decoration: none;
+    border: 5px solid brown;
+  }
+  
+  
+  .lasts h1{
+    font-size: 5vw;
+  }
+  .fami{
+    display: flex;
+  justify-content: space-between;
+  }
+  .fami img{
+  border: 5px solid white;
+  }
+  @media screen and (max-width:768px){
+    .al{
+      display:none;
+    }
+    .dad{
+      padding-left: 15px;
+    }
+    .daa{
+      width: 85vw;
+      border-radius: 0;
+      margin-top: 250px;
+    }
+    .daa div button{
+      width: 40vw;
+      height: 5vh;
+      margin-top: 200px;
+    }
+    .gg{
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      width: 85vw;
+      padding: 10px;
+      border-radius: 0;
+    }
+    .la{
+      font-size: 6vw;
+     
+    }
+    #openBtn{
+      display: block;
+    }
+    .intro{
+      display: flex;
+      flex-direction: column-reverse;
+      height: auto;
+      text-align: center;
+      width: 85vw;
+      border-radius: 0;
+    }
+    .S{
+      font-size: 10vw;
+    }
+    .ss{
+      font-size: 6vw;
+    }
+    .sss{
+      font-size: 5vw;
+    }
+    section{
+      margin-left: 2vw;
+    }
+    .assd{
+      width: 70vw;
+    }
+    .aboutus{
+      width: 85vw;
+      border-radius: 0;
+
+    }
+    .aboutus div{
+      font-size: 5vw;
+    }
+    .pta{
+      height: auto;
+      width: 85vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 0;
+    }
+    .ta{
+      all: unset;
+      display: flex;
+      
+    }
+    .pt{
+      width: 38vw;
+    }
+     .position{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+     }
+     .ptd{
+      width: 85vw;
+      height: auto;
+      border-radius: 0;
+     } 
+      .ptd h1{
+        font-size: 6vw;
+      }
+     body{
+       width: 100vw;
+      background-image: url("images/aaaa.png");
+      overflow-x: hidden;
+      padding:0;
+      margin:0;
+      
+
+     }
+
+     
+  }
+ 
+    </style
+</head>
+<body>
+  <header>
+   <div class=""><img class="dad" src="images/file_0000000006fc61f890dbd2f9d52a10d9 - Copy.png" alt=""></div>
+   <button id="openBtn" class="fol">☰ </button>
+    <div class="al">
+    <a href="#home">home</a>
+    <a href="#about us">about us</a>
+    <a href="#contact us">contact us</a>
+    <a href="#our products">our products</a>
+    </div>
+     <div id="sidebar">
+    <button id="closeBtn" >×</button>
+    <a href="#home" class="sidebar-link">Home</a>
+    <a href="#about us" class="sidebar-link">About us</a>
+    <a href="#contact us" class="sidebar-link">contact us</a>
+    <a href="#our products" class="sidebar-link">our produvts</a>
+  </div>
+  </header>
+  <div class="container">
+  <section class="daa" id="home">
+    
+    <div><a href="tel:+2348030710885"><button>contat us now</button></a></div>
+  </section>
+  <section class="gg">
+    <div class="la"> <div>✔</div>Chicken Feed& Drug</div>
+    <div class="la"> <div>✔</div> Catfish Feed& Drug</div>
+    <div class="la"> <div>✔</div> Catfish *diffrent sizes*</div>
+    <div class="la"> <div>✔</div>Chicken *live chicken*</div>
+  </section>
+  <section class="intro">
+    <div class="as">
+    <div class="S">WELCOME</div>
+    <div class="ss"> Everthing Your Farm Needs</div>
+    <div class="ss"> From Our Farms, to your Business</div>
+    <div class="sss"> Our multi-farm hub supplies high-quality chicken feed,essential poultry drugs, and fresh catfish- available in bulk quantites. Whether you're feeding your flock or stocking up on tons of fish, we deliver trusted Farm products straight to your doorstep</div>
+    <div>
+    <a href="tel:+2348030710885"><button>Shop Now</button></a>
+    </div>
+    </div>
+    <div class="ass">
+      <
+      <img class="assd" src="images/cccc.jpg" alt=""></div>
+    </section>
+    <section id="about us" class="aboutus">
+       <h1>About Us</h1>
+       <div>BoldBee Multi Farm is a proudly Nigerian, multi-purpose agricultural business based in the heart of Ogun State. We specialize in the production and sale of high-quality chicken and fish, nutrient-rich feeds, and trusted veterinary drugs for poultry and aquaculture. At BoldBee, we are passionate about supporting farmers, agripreneurs, and food producers with everything they need to succeed. From healthy day-old chicks and catfish to scientifically formulated feeds and effective livestock medications, we are your one-stop shop for sustainable farming solutions. Driven by innovation, integrity, and community impact, we combine modern farm practices with local expertise to deliver products that are safe, reliable, and profitable. Whether you're managing a large-scale farm or just starting out, BoldBee Multi Farm is here to help you grow—literally. Join the growing number of farmers who trust BoldBee to keep their flocks, fish, and futures thriving.
+        </div>
+      </section>
+    <section class="pta" id="our products" >
+      <div class="d1">OUR PRODUCTS</div>
+      <div class="position">
+      <div class="ta">
+      <div><img class="pt" src="images/jjjj.png" alt=""></div>
+      <div><img class="pt" src="images/ffff.png" alt=""></div>
+      </div>
+      <div class="ta">
+      <div><img class="pt" src="images/gggg.png" alt=""></div>
+      <div><img class="pt" src="images/hhhh.png" alt=""></div>
+      </div>
+      <div class="ta">
+      <div><img class="pt" src="images/iiii.png" alt=""></div>
+      <div><img class="pt" src="images/kkkk.jpg" alt=""></div>
+      </div>
+      </div>
+      </section>
+      <section class="ptd">
+        <h1>WHY CHOOSE US ????</h1>
+         <div class="ptsd">✅ High-Quality Feeds for optimal growth </div>
+         <div class="ptsd">✅ Heaalthy Live Stock Guaranteed</div>
+         <div class="ptsd">✅ Affordable Vetenary Drugs You Can Trust</div>
+         <div class="ptsd">✅ One Stop Farm shop</div>
+         <div class="ptsd">✅ Expert Support & Farm Advice</div>
+         <div class="ptsd">✅ Reliable Supply Always</div>
+        </section>
+        <section class="last" id="contact us">
+          <div class="fami">
+          <img src="images/eeee.png" alt="">
+          <img src="images/cccc.jpg" alt="">
+          </div>
+          <div class="lasts">
+            
+            <h1>BoldBee Mltifarm</h1>
+            <div style="display: flex;gap: 5vw;">
+               <a href="mailto:beeblexing@gmail.com">📧</a>
+               <a href="tel:2348030710885">📞</a>
+               <a href="wa.me/+2348030710885">👩‍💻</a>
+               </div>
+              </div>
+            </div>
+          </section>
+          <section></section>
+   </div>
+    <script>
+      const openBtn = document.getElementById('openBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    openBtn.addEventListener('click', () => {
+      sidebar.classList.add('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+    });
+  
+  </script>
+</body>
+</html>
