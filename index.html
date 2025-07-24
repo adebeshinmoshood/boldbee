@@ -9,15 +9,17 @@
   <style>
         /* Toggle (open) button */
     #openBtn {
+      all: unset;
       position: fixed;
       top: 3vw;
-      color: white;
+      color: black;
       border: none;
-      background-color: brown;
+      background-color: none;
       margin-left: 85vw;
       font-size: 30px;
       cursor: pointer;
       display: none;
+      text-decoration: none;
     
     }
 
@@ -377,12 +379,13 @@ section{
     }
     .last{
       width: 100vw;
-      border: 5px solid white;
+      border:none
     }
     .daa{
       width: 100vw;
       border-radius: 0;
       margin-top: 100px;
+      border: none;
     }
     .daa div button{
       width: 40vw;
@@ -395,6 +398,7 @@ section{
       height: auto;
       width: 100vw;
       border-radius: 0;
+      border: none;
     }
     .la{
       font-size: 6vw;
@@ -410,6 +414,7 @@ section{
       text-align: center;
       width: 100vw;
       border-radius: 0;
+      border: none;
     }
     .S{
       font-size: 10vw;
@@ -429,6 +434,9 @@ section{
     .aboutus{
       width: 100vw;
       border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
     }
     .aboutus div{
@@ -441,6 +449,12 @@ section{
       flex-direction: column;
       align-items: center;
       border-radius: 0;
+      border: none;
+    }
+    section{
+      width: 100vw;
+      padding: 0;
+      border: none;
     }
     .ta{
       all: unset;
@@ -448,7 +462,7 @@ section{
       
     }
     .pt{
-      width: 38vw;
+      width: 45vw;
     }
      .position{
       display: flex;
@@ -480,7 +494,17 @@ section{
       padding-right: 0;
        all:unset;
      }
-
+    .last div img{
+      width: 100vw;
+      height: 50vh;
+      border: none;
+    }
+    .fami{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
      
   }
  
