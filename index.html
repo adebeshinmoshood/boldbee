@@ -118,14 +118,16 @@
    .daa{
     margin-top:10vw;
     scroll-behavior: smooth;
-   background-image: url("images/dddd.jpg");
+   background-image: url("images/caca.jpg");
    width: 100vw;
-   height:80vw;
+   height: auto;
    background-repeat: no-repeat;
    display: flex;
+   flex-direction: column;
    align-items: center;
    justify-content: center;
    background-size: cover;
+   
    
      
    }
@@ -144,15 +146,12 @@
     
       
     }
-   .daa div{
-    font-size: 6vw;
-    font-weight: bolder;
-   }
+   
    .daa button{
     background-color: burlywood;
      font-size: 4vw;
      color: black;
-     margin-top: 70vw;
+     
      height: 8vw;
   }
   .al{
@@ -330,7 +329,7 @@ section{
 }
  .last div img{
   width: 48vw;
-  height: 40vh;
+  height: auto;
  }
  .last{
   background-color: burlywood;
@@ -384,6 +383,30 @@ section{
     width: 5vw;
     height: auto;
   }
+  .a12{
+    justify-content: center;
+   display: flex;
+   gap: 2vw;
+   text-align: center;
+  }
+  .a13{
+    font-size: 10vw;
+    font-weight: bolder;
+  }
+  .a14{
+   font-size: 10vw;
+   font-style: italic;
+  }
+  .a15{
+    font-size: 7vw;
+
+  }
+  .a16{
+    font-size: 7vw;
+  }
+  .a17{
+    font-size: 7vw;
+  }
   @media screen and (max-width:768px){
     .al{
       display:none;
@@ -411,14 +434,18 @@ section{
     }
     .daa{
       width: 100vw;
+      height: auto;
       border-radius: 0;
-      margin-top: 15vw;
+       display: flex;  
+       flex-direction: column;
+       gap: 3vw;
+        margin-top: 18vw;
       border: none;
     }
     .daa div button{
       width: 40vw;
       height: 5vh;
-      margin-top: 66vw;
+     
     }
     .gg{
       display: flex;
@@ -488,6 +515,7 @@ section{
     }
     .pt{
       width: 45vw;
+      
     }
     section{
       width: 100vw;
@@ -566,7 +594,13 @@ section{
   </header>
   <div class="container">
   <section class="daa" id="home">
-    
+    <div class="a12">
+      <div class="a13">BoldBee</div>
+      <div class="a14">Multi-farm</div>
+      </div>
+      <div class="a15">FARM PRODUCTS & FEED </div>
+      <div class="a16">DELIVERED TO YOUR </div>
+      <div class="a17">NEIGBHORHOOD</div>
     <div><a href="tel:+2348030710885"><button>contat us now</button></a></div>
   </section>
   <section class="gg">
