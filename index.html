@@ -134,10 +134,8 @@
    }
    
     body{
-      
       display: flex;
       flex-direction: column;
-      
       background-repeat: no-repeat;
       background-attachment: fixed;
       align-items: center;
@@ -152,7 +150,6 @@
     background-color: burlywood;
      font-size: 4vw;
      color: black;
-     
      height: 8vw;
   }
   .al{
@@ -190,6 +187,7 @@
 }
 section{
   width: 100vw;
+  padding: 3vw;
   
 }
 .intro{
@@ -205,9 +203,9 @@ section{
    
    
 }
-section{
-  padding: 2vw;
-}
+
+  
+
 .S{
   color: #c3d500;
   font-size: 4vw;
@@ -227,6 +225,19 @@ section{
 }
 .as button{
   font-size: 4vw;
+  
+}
+.rptsd{
+  width: 90vw;
+  margin-right: 8vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  height: auto;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
   
 }
 .as{ padding-left: 20px;
@@ -281,11 +292,10 @@ section{
    background-repeat: no-repeat;
    display: flex;
    align-items: center;
-   justify-content: space-around;
+   justify-content: center;
    background-size: cover;
    color: white;
-   flex-direction: column;
-   text-align: center;
+  
    
 }
 .ptd h1{
@@ -303,6 +313,7 @@ section{
   justify-content: center;
   background-color: burlywood;
    display: flex;
+   align-items: center;
    flex-direction: column;
   
   
@@ -409,10 +420,32 @@ section{
   .a17{
     font-size: 7vw;
   }
+  .dada{
+    height: 10vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 50vw;
+    color: white;
+    border-radius: 3vw;
+    display: flex;
+    justify-content: center;
+     align-items: center;
+    text-decoration: none;
+    gap: 1vw;
+  }
+    .dada img{
+      width: 5vw;
+    }
+  .aboutus a{
+    text-decoration: none;
+  }
+  .hn{
+    font-size: 4vw;
+  }
   @media screen and (max-width:768px){
     .al{
       display:none;
     }
+    
     .fam a img{
       font-size: 5vw;
     }
@@ -544,7 +577,7 @@ section{
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       width: 100vw;
       height: auto;
       border-radius: 0;
@@ -582,9 +615,11 @@ section{
       align-items: center;
       gap: 20px;
     }
+    .rptsd{
+    margin-left: 8vw;
      
   }
- 
+ }
     </style
 </head>
 <body>
@@ -637,9 +672,16 @@ section{
       <img class="assd" src="images/cccc.jpg" alt=""></div>
     </section>
     <section id="about us" class="aboutus">
+      
        <h1>About Us</h1>
-       <h3> BoldBee Multi Farm is a proudly Nigerian, multi-purpose agricultural business based in the heart of Ogun State. We specialize in the production and sale of high-quality chicken and fish, nutrient-rich feeds, and trusted veterinary drugs for poultry and aquaculture. At BoldBee, we are passionate about supporting farmers, agripreneurs, and food producers with everything they need to succeed. From healthy day-old chicks and catfish to scientifically formulated feeds and effective livestock medications, we are your one-stop shop for sustainable farming solutions. Driven by innovation, integrity, and community impact, we combine modern farm practices with local expertise to deliver products that are safe, reliable, and profitable. Whether you're managing a large-scale farm or just starting out, BoldBee Multi Farm is here to help you grow—literally. Join the growing number of farmers who trust BoldBee to keep their flocks, fish, and futures thriving.
+       <h3> BoldBee Multi Farm is a proudly Nigerian, multi-purpose agricultural business based in the heart of Ogun State.</h3>  
+       <a href="https://www.google.com/maps?q=BoldBee
+       +farm"><div class="dada">
+       <div> <img src="images/location.png" alt=""></div><div class="hn">view in map</div>
+        </div></a> 
+       <h3> We specialize in the production and sale of high-quality chicken and fish, nutrient-rich feeds, and trusted veterinary drugs for poultry and aquaculture. At BoldBee, we are passionate about supporting farmers, agripreneurs, and food producers with everything they need to succeed. From healthy day-old chicks and catfish to scientifically formulated feeds and effective livestock medications, we are your one-stop shop for sustainable farming solutions. Driven by innovation, integrity, and community impact, we combine modern farm practices with local expertise to deliver products that are safe, reliable, and profitable. Whether you're managing a large-scale farm or just starting out, BoldBee Multi Farm is here to help you grow—literally. Join the growing number of farmers who trust BoldBee to keep their flocks, fish, and futures thriving.
         </h3>
+        
       </section>
     <section class="pta" id="our products" >
       <div class="d1">OUR PRODUCTS</div>
@@ -659,9 +701,9 @@ section{
       </div>
       </section>
       <section class="ptd">
-        <h1>WHY CHOOSE US ????</h1>
-        
+        <div class="rptsd">
          <div class="ptsd">
+         <h1>WHY CHOOSE US ????</h1>
           <h3><li> High-Quality Feeds for optimal growth </li> </div></h3>
          <div class="ptsd"><h3><li>Heaalthy Live Stock Guaranteed </li></h3></div>
          <div class="ptsd"><h3><li> Affordable Vetenary Drugs You Can Trust</li></h3></div>
@@ -669,6 +711,7 @@ section{
          <div class="ptsd"><h3><li> Expert Support & Farm Advice</li></h3></div>
          <div class="ptsd"><h3> <li> Reliable Supply Always</li></h3></div>
          </h3>
+         </div>
         </section>
         <section class="last" id="contact us">
           <div class="fami">
