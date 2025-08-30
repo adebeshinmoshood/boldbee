@@ -3,37 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>bold bee // multifarm
-
-  </title>
+  <title>BoldBee // MultiFarm</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
   <style>
-        /* Toggle (open) button */
+    :root {
+      --main-yellow: #c3d500;
+      --main-brown: burlywood;
+      --main-dark: #222;
+      --main-light: #fff;
+      --main-accent: #d9534f;
+      --main-grey: #f5f5f5;
+      --main-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      width: 100vw;
+      overflow-x: hidden;
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      background: var(--main-grey);
+      color: var(--main-dark);
+      scroll-behavior: smooth;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--main-light);
+      box-shadow: var(--main-shadow);
+      height: 70px;
+      padding: 0 3vw;
+      position: fixed;
+      top: 0;
+      width: 100vw;
+      z-index: 100;
+      transition: box-shadow 0.2s;
+    }
+    header:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    }
+    .dad {
+      width: auto;
+      height: 7vw;
+      border-radius: 10%;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: var(--main-light);
+      transition: transform 0.2s;
+    }
+    .dad:hover {
+      transform: scale(1.07) rotate(-3deg);
+    }
+    .dal {
+      display: flex;
+      gap: 2vw;
+      align-items: center;
+    }
+    .dal a {
+      color: var(--main-dark);
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.2vw;
+      padding: 8px 18px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .dal a:hover {
+      background: var(--main-yellow);
+      color: var(--main-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
     #openBtn {
       all: unset;
       position: fixed;
-      top: 3vw;
-      color: black;
-      border: none;
-      background-color: none;
-      margin-left: 85vw;
-      font-size: 30px;
+      top: 1vw;
+      right: 3vw;
+      color: var(--main-dark);
+      font-size: 2.5rem;
       cursor: pointer;
       display: none;
-      text-decoration: none;
-    
+      z-index: 200;
+      background: var(--main-yellow);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      line-height: 48px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      transition: background 0.2s, color 0.2s;
     }
-    /* Sidebar container */
+    #openBtn:hover {
+      background: var(--main-accent);
+      color: var(--main-light);
+    }
     #sidebar {
       position: fixed;
-      top: 50px; /* not from the very top */
+      top: 70px;
       right: 0;
       width: 260px;
-      height: auto; /* just tall enough */
-      background-color: #e0e0e0; /* soft grey */
-      color: #333;
+      background: var(--main-light);
+      color: var(--main-dark);
       border-radius: 12px 0 0 12px;
       box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.15);
-      padding: 20px;
+      padding: 20px 0 20px 20px;
       transform: translateX(110%);
       transition: transform 0.3s ease;
       z-index: 1000;
@@ -41,659 +119,661 @@
     #sidebar.active {
       transform: translateX(0);
     }
-    #sidebar.active {
-      transform: translateX(0);
-    }
-    /* Close button inside the sidebar */
     #closeBtn {
       position: absolute;
       top: 10px;
       left: 10px;
-      background-color: #d9534f;
-      color: white;
+      background: var(--main-accent);
+      color: var(--main-light);
       border: none;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     }
-    /* Sidebar links */
     .sidebar-link {
       display: block;
       margin-top: 40px;
       padding: 12px 16px;
-      background-color: brown;
-      color: white;
+      background: var(--main-brown);
+      color: var(--main-dark);
       text-decoration: none;
       border-radius: 8px;
-      transition: background-color 0.2s;
       font-weight: 500;
+      transition: background 0.2s, color 0.2s;
     }
     .sidebar-link:hover {
-      background-color: #dcdcdc;
-    } 
-   header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: black;
-    background-color: white;
-    box-shadow:4px 4px 4px 4px solid white;
-     padding: 15px;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-   
-   }
-   .dal a{
-    color: black;
-    font-weight: bolder;
-    text-decoration: none;
-    font-size: 2vw;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 5px;
-  
-   }
-.bbi{
-  width: 100vw;
-}  
-   body{
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-     display: flex;
+      background: var(--main-yellow);
+      color: var(--main-light);
+    }
+    .container {
+      display: flex;
       flex-direction: column;
-   }
-   .daa{
-    margin-top:10vw;
-   background-image: url("images/caca.jpg");
-   width: 100vw;
-   height: auto;
-   background-repeat: no-repeat;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: space-around;
-   background-size: cover;
-   background-color: rgb(245, 235, 220);
-   
-   
-     
-   }
-   .daa button{
-    background-color: burlywood;
-     font-size: 4vw;
-     color: black;
-     height: 8vw;
-  }
-  .dal{
-    display: flex;
-    gap: 2vw;
-    justify-content: space-between;
-    align-self: center;
-    padding-right: 55px;
-  }
-  .dad{
-    width: 20vw;
-  }
-  .gg{
-    font-size: 2vw;
-    font-style: italic;
-    font-weight: bold;
-    width: 100vw;
-  }
-  .la{
-    display: flex;
-    gap: 2vw;
-    padding: 2vw;
-  }
-  .la div{
-    font-style: italic;
-  }
-.gg{
-  display: flex;
-  background-color: white;
-  align-items: center;
-  justify-content: center;
- 
-
-}
-section{
-  width: 100vw;
-  padding:2vw;
-  margin: 0;
-  
-}
-.intro{
-   background-image: url("images/bbbb.png");
-   width: 100vw;
-   height: 80vw;
-   background-repeat: no-repeat;
-   display: flex;
-   align-items: center;
-   justify-content: space-around;
-   background-size: cover;
-   background-color: rgb(72, 72, 72);
-   
-   
-}
-.S{
-  color: #c3d500;
-  font-size: 4vw;
-}
-.ss{
-  color: white;
-  font-size: 4.5vw;
-}
-.sss{
-  font-size: 3vw;
-  color: white;
-}
-.ass{
-  display: flex;
-  align-items: center;
-  padding: 30px;
-}
-.as button{
-  font-size: 4vw;
-  
-}
-.rptsd{
-  width: 90vw;
-  background-color: rgba(0, 0, 0, 0.6);
-  height: auto;
-  text-align: center; 
-}
-.as{ 
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-}
-.assd{
-  width: 30vw;
-  padding: 50px;
-}
-.position{
-  
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  
-
-}
-.pta{
-  width: 100vw;
-  background-color: white;
-  text-align: center;
-   padding: 10px;
-   height: auto;
-   
- 
-   
-}
-.ta{
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.pt{
-  width: 33vw;
-  height: 30vh;
-}
-.d1{
-  font-size: 5vw;
-  font-style: oblique;
-}
-.ptd{
-   background-image: url("images/llll.jpg");
-   width: 100vw;
-   height: auto;
-   background-repeat: no-repeat;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-size: cover;
-   color: white;
-}
-.ptd h1{
-   font-size: 5vw;
-}
-.ptsd{
-  font-size: 4vw;
-   
-}
-.aboutus{
-  height: auto;
-  width: 100vw;
-  background-color: burlywood;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   text-align: center;
-   padding: 2vw;
-}
-.aboutus h1{
-  font-size: 5vw;
-}
-.aboutus h3{
-  font-size: 4vw;
-   
-}
-.position div{
-  gap: 10px;
-}
-.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-}
-.la div{
-  gap: 2vw;
-}
- .last div img{
-  width: 48vw;
-  height: auto;
- }
- .last{
-  background-color: burlywood;
-  
-
- }
- .lasts{
-  background-color: burlywood;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
- }
- .dan{
-   height: 10vh;
- }
-   .pdd{
-    
-    background-color: burlywood;
-   }
-   .dad{
-    margin-left: 2vw;
-   }
-  .lasts h1{
-    
-    font-size: 5vw;
-  }
-  .fami{
-    display: flex;
-   gap: 2vw;
-  }
-  .dpp{
-    margin-right: 7vw;
-  }
-  html, body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    width: 100vw;
-    overflow-x: hidden;
-  }
-  .fam{
-    display: flex;
-    gap: 5vw;
-  }
-  .fam a img{
-    justify-content: space-between;
-    gap: 3vw;
-    width: 5vw;
-    height: auto;
-  }
-  .a12{
-    justify-content: center;
-   display: flex;
-   gap: 2vw;
-   text-align: center;
-  }
-  .a13{
-    font-size: 10vw;
-    font-weight: bolder;
-  }
-  .a14{
-   font-size: 10vw;
-   font-style: italic;
-  }
-  .a15{
-    font-size: 7vw;
-
-  }
-  .a16{
-    font-size: 7vw;
-  }
-  .a17{
-    font-size: 7vw;
-  }
-  .dada{
-    height: 10vw;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 50vw;
-    color: white;
-    border-radius: 3vw;
-    display: flex;
-    justify-content: center;
-     align-items: center;
-    text-decoration: none;
-    gap: 1vw;
-  }
-    .dada img{
-      width: 7vw;
-    }
-  .aboutus a{
-    text-decoration: none;
-  }
-  .hn{
-    font-size: 4vw;
-  }
-  .dook{
-    width: 90vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    text-align: center;
-    padding: 0.5vw;
-    box-shadow: 4px 4px 4px 4px #d9534f;
-  }
-  @media screen and (max-width:768px){
-    .dal{
-      display:none;
-    }
-    .fam a img{
-      font-size: 5vw;
-    }
-    .pdd{
-      width: 30vw;
-      height: auto;
-      font-size: 5vw;
-    }
-    .dpp{
-      margin-right: 0;
-    }
-    .last{
+      align-items: center;
+      padding-top: 90px;
       width: 100vw;
-      border:none
     }
-    .as button{
-    
-    margin-bottom: 2vw;
-    }
-    .daa{
-      width: 100vw;
-      height: auto;
-      border-radius: 0;
-       display: flex;  
-       flex-direction: column;
-       gap: 3vw;
-        margin-top: 18vw;
-      border: none;
-      padding: 4vw;
+    .daa {
+      margin-top: 2vw;
+      background-image: url("images/caca.jpg");
       background-size: cover;
-    
-      
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 95vw;
+      border-radius: 24px;
+      box-shadow: var(--main-shadow);
+      padding: 4vw 2vw 4vw 2vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2vw;
+      background-color: rgba(245, 235, 220, 0.95);
+      transition: box-shadow 0.2s;
     }
-    .daa div button{
-      width: 40vw;
-      height: 5vh;
+    .daa:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .a12 {
+      display: flex;
+      gap: 2vw;
+      align-items: baseline;
+      text-align: center;
+    }
+    .a13 {
+      font-size: 7vw;
+      font-weight: 900;
+      color: var(--main-yellow);
+      letter-spacing: 2px;
+      text-shadow: 1px 2px 0 #fff, 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .a14 {
+      font-size: 6vw;
+      font-style: italic;
+      color: var(--main-dark);
+      font-weight: 700;
+      text-shadow: 1px 2px 0 #fff, 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .a15, .a16, .a17 {
+      font-size: 3vw;
+      color: var(--main-dark);
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 0.5vw;
+    }
+    .daa button {
+      background: var(--main-yellow);
+      color: var(--main-dark);
+      font-size: 2vw;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      padding: 1vw 4vw;
+      margin-top: 2vw;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .daa button:hover {
+      background: var(--main-accent);
+      color: var(--main-light);
+      transform: scale(1.05);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+    .gg {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2vw;
+      background: var(--main-light);
+      width: 95vw;
+      border-radius: 18px;
+      margin: 2vw 0;
+      box-shadow: var(--main-shadow);
+      padding: 2vw 0;
+    }
+    .la {
+      font-size: 2vw;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--main-accent);
+      background: var(--main-brown);
+      border-radius: 12px;
+      padding: 1vw 2vw;
+      margin: 0.5vw 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: background 0.2s, color 0.2s;
+    }
+    .la:hover {
+      background: var(--main-yellow);
+      color: var(--main-dark);
+    }
+    .intro {
+      background-image: url("images/bbbb.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 95vw;
+      min-height: 40vw;
+      border-radius: 24px;
+      box-shadow: var(--main-shadow);
+      margin: 2vw 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2vw;
+      padding: 3vw;
+      background-color: rgba(72, 72, 72, 0.7);
+      transition: box-shadow 0.2s;
+    }
+    .intro:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .as {
+      display: flex;
+      flex-direction: column;
+      gap: 1vw;
+      max-width: 50vw;
+    }
+    .S {
+      color: var(--main-yellow);
+      font-size: 3vw;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+    .ss {
+      color: var(--main-light);
+      font-size: 2.5vw;
+      font-weight: 700;
+    }
+    .sss {
+      font-size: 1.5vw;
+      color: var(--main-light);
       margin-bottom: 1vw;
-     
     }
-    .gg{
-      display: flex;
-      flex-direction: column;
-      height: auto;
-      width: 100vw;
-      border-radius: 0;
+    .as button, .pdd {
+      background: var(--main-accent);
+      color: var(--main-light);
+      font-size: 1.5vw;
       border: none;
+      border-radius: 30px;
+      padding: 0.7vw 3vw;
+      margin-top: 1vw;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    .la{
-      font-size: 6vw;
-     
+    .as button:hover, .pdd:hover {
+      background: var(--main-yellow);
+      color: var(--main-dark);
+      transform: scale(1.05);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
     }
-    #openBtn{
-      display: block;
-    }
-    .intro{
+    .ass {
       display: flex;
-      flex-direction: column-reverse;
-      height: auto;
-      text-align: center;
-      width: 100vw;
-      border-radius: 0;
-      border: none;
-      background-size: cover;
-      
-    }
-    .S{
-      font-size: 10vw;
-    }
-    .ss{
-      font-size: 6vw;
-    }
-    .sss{
-      font-size: 5vw;
-    }
-    .assd{
-      width: 70vw;
-    }
-    .aboutus{
-      width: 100vw;
-      border-radius: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      
-
-    }
-    .aboutus div{
-      font-size: 5vw;
-    }
-    .pta{
-      height: auto;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-radius: 0;
-      border: none;
-     
-    }
-    .ta{
-      all: unset;
-      display: flex;
-      
-    }
-    .pt{
-      width: 45vw;
-      
-    }
-    section{
-      width: 100vw;
-      padding: 2vw;
-      margin: 0;
-      border: none;
-    }
-     .position{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      
-     }
-     .ptd{
-      display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 100vw;
-      height: auto;
-      border-radius: 0;
-      background-size: cover;
-      
-     } 
-      .ptd h1{
-        font-size: 6vw;
-      }
-     body{
-       width: 100vw;
-      overflow-x: hidden;
-      padding:0;
-      margin:0;
-      gap: 0;
-      
-
-     }
-     .fam{
-      margin-bottom: 2vw;
-     }
-    #cod{
-      width: 100vw;
-      height: 50vh;
-      border: none;
     }
-    .fami{
+    .assd {
+      width: 22vw;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-left: 2vw;
+      transition: transform 0.2s;
+    }
+    .assd:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+    .aboutus {
+      width: 95vw;
+      background: var(--main-brown);
+      border-radius: 18px;
+      box-shadow: var(--main-shadow);
+      margin: 2vw 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3vw 2vw;
+    }
+    .dook {
+      width: 100%;
+      background: var(--main-light);
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 2vw;
+    }
+       .dook a{
+        text-decoration: none;
+       }
+
+    .aboutus h1 {
+      font-size: 3vw;
+      color: var(--main-accent);
+      margin-bottom: 1vw;
+      letter-spacing: 1px;
+    }
+    .aboutus h3 {
+      font-size: 1.5vw;
+      color: var(--main-dark);
+      font-weight: 500;
+      margin-bottom: 1vw;
+      line-height: 1.6;
+    }
+    .dada {
+      height: 5vw;
+      background: var(--main-accent);
+      width: 30vw;
+      color: var(--main-light);
+      border-radius: 2vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      gap: 1vw;
+      margin: 2vw auto;
+      font-size: 1.2vw;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .dada:hover {
+      background: var(--main-yellow);
+      color: var(--main-dark);
+      transform: scale(1.04);
+    }
+    .dada img {
+      width: 2vw;
+      height: 2vw;
+    }
+    .hn {
+      all: unset;
+      text-decoration: none;
+      font-size: 1.2vw;
+    }
+    .pta {
+      width: 95vw;
+      background: var(--main-light);
+      border-radius: 18px;
+      box-shadow: var(--main-shadow);
+      margin: 2vw 0;
+      text-align: center;
+      padding: 2vw 0;
+    }
+    .d1 {
+      font-size: 2.5vw;
+      font-style: oblique;
+      color: var(--main-accent);
+      font-weight: bold;
+      margin-bottom: 2vw;
+      letter-spacing: 1px;
+    }
+    .position {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 2vw;
     }
-    .rptsd{
-     
-  }
- }
-    </style
+    .ta {
+      display: flex;
+      gap: 2vw;
+      justify-content: center;
+      margin-bottom: 1vw;
+    }
+    .pt {
+      width: 18vw;
+      height: 18vw;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: var(--main-brown);
+      transition: transform 0.2s;
+    }
+    .pt:hover {
+      transform: scale(1.04) rotate(-2deg);
+    }
+    .ptd {
+      background-image: url("images/llll.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 95vw;
+      border-radius: 18px;
+      box-shadow: var(--main-shadow);
+      margin: 2vw 0;
+      color: var(--main-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3vw 0;
+      transition: box-shadow 0.2s;
+    }
+    .ptd:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .rptsd {
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      padding: 2vw;
+      text-align: center;
+    }
+    .ptsd {
+      font-size: 1.5vw;
+      margin: 1vw 0;
+    }
+    .ptd h1 {
+      font-size: 2.5vw;
+      color: var(--main-yellow);
+      margin-bottom: 1vw;
+      letter-spacing: 1px;
+    }
+    .last {
+      width: 95vw;
+      background: var(--main-brown);
+      border-radius: 18px;
+      box-shadow: var(--main-shadow);
+      margin: 2vw 0;
+      padding: 2vw 0;
+    }
+    .fami {
+      display: flex;
+      gap: 2vw;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2vw;
+    }
+    #cod {
+      width: 40vw;
+      height: 30vw;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 2px solid var(--main-yellow);
+      transition: transform 0.2s;
+    }
+    #cod:hover {
+      transform: scale(1.03) rotate(-2deg);
+    }
+    .dpp {
+      margin-right: 0;
+    }
+    /* Footer Styles */
+    .site-footer {
+      width: 100vw;
+      background: linear-gradient(90deg, var(--main-brown) 60%, var(--main-yellow) 100%);
+      color: var(--main-dark);
+      padding: 3vw 0 1vw 0;
+      margin-top: 4vw;
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+      border-top: 1px solid #e0e0e0;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3vw;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2vw;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+      font-size: 2vw;
+      font-weight: bold;
+    }
+    .footer-logo img {
+      width: auto;
+      height: 4vw;
+      border-radius: 1vw;
+      background: var(--main-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+    .footer-logo img:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+    .footer-links {
+      display: flex;
+      gap: 2vw;
+    }
+    .footer-links a {
+      color: var(--main-dark);
+      text-decoration: none;
+      font-size: 1.2vw;
+      font-weight: 500;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--main-accent);
+      text-decoration: underline;
+    }
+    .footer-social {
+      display: flex;
+      gap: 1vw;
+    }
+    .footer-social a img {
+      width: 2.5vw;
+      height: 2.5vw;
+      transition: transform 0.2s;
+    }
+    .footer-social a:hover img {
+      transform: scale(1.2) rotate(-10deg);
+    }
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 1vw;
+      margin-top: 1vw;
+      color: #444;
+      opacity: 0.8;
+      letter-spacing: 0.05em;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 1vw;
+    }
+    /* Responsive Styles */
+    @media screen and (max-width: 1100px) {
+      .dal a { font-size: 2vw; }
+      .a13, .a14 { font-size: 8vw; }
+      .a15, .a16, .a17 { font-size: 4vw; }
+      .footer-logo { font-size: 4vw; }
+      .footer-logo img { width:auto; height: 8vw; }
+    }
+    @media screen and (max-width: 900px) {
+      .dal a { font-size: 2.5vw; }
+      .footer-links a { font-size: 2vw; }
+      .footer-logo { font-size: 5vw; }
+      .footer-logo img { width: auto; height: 10vw; }
+    }
+    @media screen and (max-width: 768px) {
+      header {  padding: 0 2vw; }
+      .dad { width:auto; height:5vw; }
+      .dal { display: none; }
+      #openBtn { display: block; }
+      .container { padding-top: 60px; }
+      .daa, .gg, .intro, .aboutus, .pta, .ptd, .last { width: 98vw; border-radius: 10px; }
+      .a12{display: flex;flex-direction: column;}
+      .a13, .a14 { font-size: 10vw; }
+      .a15, .a16, .a17 { font-size: 5vw; }
+      .daa button, .as button, .pdd { font-size: 4vw; padding: 2vw 8vw; }
+      .la { font-size: 5vw; padding: 2vw 4vw; }
+      .intro { flex-direction: column-reverse; gap: 3vw; padding: 4vw 2vw; }
+      .as { max-width: 100vw; }
+      .S { font-size: 6vw; }
+      .ss { font-size: 5vw; }
+      .sss { font-size: 4vw; }
+      .assd { width: 70vw; margin: 2vw 0; }
+      .aboutus h1 { font-size: 7vw; }
+      .aboutus h3 { font-size: 4vw; }
+      .dada { width: 80vw; height: 10vw; font-size: 3vw; }
+      .dada img { width: 6vw; height: 6vw; }
+      .hn { font-size: 3vw;text-decoration: none; }
+      .dook { padding: 4vw 2vw; }
+      .d1 { font-size: 6vw; }
+      .pt { width: 40vw; height: 40vw; }
+      .ptd h1 { font-size: 6vw; }
+      .ptsd { font-size: 4vw; }
+      .fami { flex-direction: column; gap: 4vw; }
+      #cod { width: 80vw; height: 40vw; }
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 3vw;
+        padding: 0 2vw;
+      }
+      .footer-logo { font-size: 6vw; gap: 2vw; }
+      .footer-logo img { width: auto; height: 10vw; border-radius: 2vw; }
+      .footer-links { gap: 5vw; margin: 2vw 0; }
+      .footer-links a { font-size: 4vw; }
+      .footer-social { gap: 4vw; }
+      .footer-social a img { width: 7vw; height: 7vw; }
+      .footer-copy { font-size: 3vw; margin-top: 2vw; }
+    }
+  </style>
 </head>
 <body>
   <header>
-   <div class=""><img class="dad" src="images/file_0000000006fc61f890dbd2f9d52a10d9 - Copy.png" alt=""></div>
-   <button id="openBtn" class="fol">☰ </button>
-    <div class="dal">
-    <a href="#home">home</a>
-    <a href="#about us">about us</a>
-    <a href="#contact us">contact us</a>
-    <a href="#our products">our products</a>
+    <div><img class="dad" src="images/file_0000000006fc61f890dbd2f9d52a10d9 - Copy.png" alt=""></div>
+    <button id="openBtn" class="fol">☰</button>
+    <nav class="dal">
+      <a href="#home">Home</a>
+      <a href="#about us">About Us</a>
+      <a href="#contact us">Contact Us</a>
+      <a href="#our products">Our Products</a>
+    </nav>
+    <div id="sidebar">
+      <button id="closeBtn">×</button>
+      <a href="#home" class="sidebar-link">Home</a>
+      <a href="#about us" class="sidebar-link">About Us</a>
+      <a href="#contact us" class="sidebar-link">Contact Us</a>
+      <a href="#our products" class="sidebar-link">Our Products</a>
     </div>
-     <div id="sidebar">
-    <button id="closeBtn" >×</button>
-    <a href="#home" class="sidebar-link">Home</a>
-    <a href="#about us" class="sidebar-link">About us</a>
-    <a href="#contact us" class="sidebar-link">contact us</a>
-    <a href="#our products" class="sidebar-link">our products</a>
-  </div>
   </header>
   <div class="container">
-  <section class="daa" id="home">
-    <div class="a12">
-      <div class="a13">BoldBee</div>
-      <div class="a14">Multi-farm</div>
+    <section class="daa" id="home">
+      <div class="a12">
+        <div class="a13">BoldBee</div>
+        <div class="a14">Multi-farm</div>
       </div>
-      <div class="a15">FARM PRODUCTS & FEED </div>
-      <div class="a16">DELIVERED TO YOUR </div>
-      <div class="a17">NEIGBHORHOOD</div>
-    <div><a href="tel:+2348030710885"><button>contat us now</button></a></div>
-  </section>
-  <section class="gg">
-    <div class="la"><li>Chicken Feed& Drug</li></div>
-    <div class="la"> <li>Catfish Feed& Drug </li></div>
-    <div class="la"> <li>Catfish *diffrent sizes*</li></div>
-    <div class="la"> <li>Chicken *live chicken*</li></div>
-  </section>
-  <section class="intro">
-    <div class="as">
-    <div class="S">WELCOME</div>
-    <div class="ss"> Everthing Your Farm Needs</div>
-    <div class="ss"> From Our Farms, to your Business</div>
-    <div class="sss"> Our multi-farm hub supplies high-quality chicken feed,essential poultry drugs, and fresh catfish- available in bulk quantites. Whether you're feeding your flock or stocking up on tons of fish, we deliver trusted Farm products straight to your doorstep</div>
-    <div>
-    <a  href="tel:+2348030710885"><button class="pdd">Shop Now</button></a>
-    </div>
-    </div>
-    <div class="ass">
-      
-      <img class="assd" src="images/cccc.jpg" alt=""></div>
+      <div class="a15">FARM PRODUCTS & FEED</div>
+      <div class="a16">DELIVERED TO YOUR</div>
+      <div class="a17">NEIGHBORHOOD</div>
+      <div><a href="tel:+2348030710885"><button>Contact Us Now</button></a></div>
+    </section>
+    <section class="gg">
+      <div class="la"><li>Chicken Feed & Drug</li></div>
+      <div class="la"><li>Catfish Feed & Drug</li></div>
+      <div class="la"><li>Catfish <span style="font-size:0.8em;">(different sizes)</span></li></div>
+      <div class="la"><li>Chicken <span style="font-size:0.8em;">(live chicken)</span></li></div>
+    </section>
+    <section class="intro">
+      <div class="as">
+        <div class="S">WELCOME</div>
+        <div class="ss">Everything Your Farm Needs</div>
+        <div class="ss">From Our Farms, to Your Business</div>
+        <div class="sss">Our multi-farm hub supplies high-quality chicken feed, essential poultry drugs, and fresh catfish—available in bulk quantities. Whether you're feeding your flock or stocking up on tons of fish, we deliver trusted farm products straight to your doorstep.</div>
+        <div>
+          <a href="tel:+2348030710885"><button class="pdd">Shop Now</button></a>
+        </div>
+      </div>
+      <div class="ass">
+        <img class="assd" src="images/cccc.jpg" alt="">
+      </div>
     </section>
     <section id="about us" class="aboutus">
       <div class="dook">
-       <h1>About Us</h1>
-       <h3> BoldBee Multi Farm is a proudly Nigerian, multi-purpose agricultural business based in the heart of Ogun State.</h3>  
-       <a href="https://www.google.com/maps?q=BoldBee
-       +farm"><div class="dada">
-       <div> <img src="images/location.png" alt=""></div><div class="hn">view in map</div>
-        </div></a> 
-       <h3> We specialize in the production and sale of high-quality chicken and fish, nutrient-rich feeds, and trusted veterinary drugs for poultry and aquaculture. At BoldBee, we are passionate about supporting farmers, agripreneurs, and food producers with everything they need to succeed. From healthy day-old chicks and catfish to scientifically formulated feeds and effective livestock medications, we are your one-stop shop for sustainable farming solutions. Driven by innovation, integrity, and community impact, we combine modern farm practices with local expertise to deliver products that are safe, reliable, and profitable. Whether you're managing a large-scale farm or just starting out, BoldBee Multi Farm is here to help you grow—literally. Join the growing number of farmers who trust BoldBee to keep their flocks, fish, and futures thriving.
+        <h1>About Us</h1>
+        <h3>BoldBee Multi Farm is a proudly Nigerian, multi-purpose agricultural business based in the heart of Ogun State.</h3>
+        <a href="https://www.google.com/maps?q=BoldBee+farm">
+          <div class="dada">
+            <img src="images/location.png" alt="">
+            <div class="hn">View in Map</div>
+          </div>
+        </a>
+        <h3>
+          We specialize in the production and sale of high-quality chicken and fish, nutrient-rich feeds, and trusted veterinary drugs for poultry and aquaculture. At BoldBee, we are passionate about supporting farmers, agripreneurs, and food producers with everything they need to succeed. From healthy day-old chicks and catfish to scientifically formulated feeds and effective livestock medications, we are your one-stop shop for sustainable farming solutions. Driven by innovation, integrity, and community impact, we combine modern farm practices with local expertise to deliver products that are safe, reliable, and profitable. Whether you're managing a large-scale farm or just starting out, BoldBee Multi Farm is here to help you grow—literally. Join the growing number of farmers who trust BoldBee to keep their flocks, fish, and futures thriving.
         </h3>
-        </div>
-      </section>
-    <section class="pta" id="our products" >
+      </div>
+    </section>
+    <section class="pta" id="our products">
       <div class="d1">OUR PRODUCTS</div>
       <div class="position">
-      <div class="ta">
-      <div><img class="pt" src="images/jjjj.png" alt=""></div>
-      <div><img class="pt" src="images/ffff.png" alt=""></div>
+        <div class="ta">
+          <div><img class="pt" src="images/jjjj.png" alt=""></div>
+          <div><img class="pt" src="images/ffff.png" alt=""></div>
+        </div>
+        <div class="ta">
+          <div><img class="pt" src="images/gggg.png" alt=""></div>
+          <div><img class="pt" src="images/hhhh.png" alt=""></div>
+        </div>
+        <div class="ta">
+          <div><img class="pt" src="images/iiii.png" alt=""></div>
+          <div><img class="pt" src="images/kkkk.jpg" alt=""></div>
+        </div>
       </div>
-      <div class="ta">
-      <div><img class="pt" src="images/gggg.png" alt=""></div>
-      <div><img class="pt" src="images/hhhh.png" alt=""></div>
+    </section>
+    <section class="ptd">
+      <div class="rptsd">
+        <h1>WHY CHOOSE US?</h1>
+        <div class="ptsd"><h3><li>High-Quality Feeds for Optimal Growth</li></h3></div>
+        <div class="ptsd"><h3><li>Healthy Livestock Guaranteed</li></h3></div>
+        <div class="ptsd"><h3><li>Affordable Veterinary Drugs You Can Trust</li></h3></div>
+        <div class="ptsd"><h3><li>One Stop Farm Shop</li></h3></div>
+        <div class="ptsd"><h3><li>Expert Support & Farm Advice</li></h3></div>
+        <div class="ptsd"><h3><li>Reliable Supply Always</li></h3></div>
       </div>
-      <div class="ta">
-      <div><img class="pt" src="images/iiii.png" alt=""></div>
-      <div><img class="pt" src="images/kkkk.jpg" alt=""></div>
+    </section>
+    <section class="last" id="contact us">
+      <div class="fami">
+        <img id="cod" src="images/eeee.png" alt="">
+        <img id="cod" class="dpp" src="images/cccc.jpg" alt="">
       </div>
+    </section>
+    <!-- Beautiful Footer Start -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/file_0000000006fc61f890dbd2f9d52a10d9 - Copy.png" alt="BoldBee Logo">
+          <span>BoldBee MultiFarm</span>
+        </div>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about us">About Us</a>
+          <a href="#our products">Products</a>
+          <a href="#contact us">Contact</a>
+        </div>
+        <div class="footer-social">
+          <a href="mailto:beeblexing@gmail.com" title="Email"><img src="images/icons8-mail-50.png" alt="Email"></a>
+          <a href="tel:2348030710885" title="Call"><img src="images/icons8-call-50.png" alt="Call"></a>
+          <a href="https://wa.me/+2348030710885" title="WhatsApp"><img src="images/icons8-whatsapp-50.png" alt="WhatsApp"></a>
+        </div>
+        <div class="footer-copy">
+          &copy; 2025 BoldBee MultiFarm. All rights reserved.
+        </div>
       </div>
-      </section>
-      <section class="ptd">
-        <div class="rptsd">
-         <div class="ptsd">
-         <h1>WHY CHOOSE US ????</h1>
-          <h3><li> High-Quality Feeds for optimal growth </li> </div></h3>
-         <div class="ptsd"><h3><li>Heaalthy Live Stock Guaranteed </li></h3></div>
-         <div class="ptsd"><h3><li> Affordable Vetenary Drugs You Can Trust</li></h3></div>
-         <div class="ptsd"><h3><li> One Stop Farm shop</li></h3></div>
-         <div class="ptsd"><h3><li> Expert Support & Farm Advice</li></h3></div>
-         <div class="ptsd"><h3> <li> Reliable Supply Always</li></h3></div>
-         </h3>
-         </div>
-        </section>
-        <section class="last" id="contact us">
-          <div class="fami">
-          <img id="cod" src="images/eeee.png" alt="">
-          <img id="cod" class="dpp" src="images/cccc.jpg" alt="">
-          </div>
-          <div class="lasts">
-            
-            <h1>BoldBee Multifarm</h1>
-            <div  class="fam" style="display: flex;gap: 5vw;">
-               <a href="mailto:beeblexing@gmail.com"><img src="images/icons8-mail-50.png" alt=""></a>
-               <a href="tel:2348030710885"><img src="images/icons8-call-50.png" alt=""></a>
-               <a href="https://wa.me/+2348030710885"><img src="images/icons8-whatsapp-50.png" alt=""></a>
-               </div>
-              </div>
-           
-          </section>
-          <section></section>
-   </div>
-    <script>
-      const openBtn = document.getElementById('openBtn');
+    </footer>
+    <!-- Beautiful Footer End -->
+  </div>
+  <script>
+    const openBtn = document.getElementById('openBtn');
     const closeBtn = document.getElementById('closeBtn');
     const sidebar = document.getElementById('sidebar');
-
     openBtn.addEventListener('click', () => {
       sidebar.classList.add('active');
     });
-
     closeBtn.addEventListener('click', () => {
       sidebar.classList.remove('active');
     });
-  
+    window.addEventListener('scroll', () => {
+      sidebar.classList.remove('active');
+    });
   </script>
 </body>
 </html>
