@@ -836,15 +836,18 @@
     <button onclick="uploadContent()">Upload</button>
     <button id="logoutBtn">Logout</button>
   </div>
+  <div class="uploads"></div>
   <!-- Login button (for owner only) -->
   <button id="loginBtn">Owner Login</button>
 
   <!-- Firebase SDKs (must be before your script) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
-  <script>
+ 
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<script>
     // Sidebar logic
     const openBtn = document.getElementById('openBtn');
     const closeBtn = document.getElementById('closeBtn');
@@ -867,93 +870,99 @@
       }, 5000); // Loader stays for 5 seconds
     });
 
-    // Firebase config
-    // REMOVE ALL import ... from ... LINES BELOW! They are not valid in browser scripts.
+    <!-- Firebase SDKs -->
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAxhbi6weQsyGqVsf_AIrw9QR-Cn67VJhs",
-      authDomain: "mush-page.firebaseapp.com",
-      projectId: "mush-page",
-      storageBucket: "mush-page.appspot.com",
-      messagingSenderId: "935213953527",
-      appId: "1:935213953527:web:75911c5292c2b42c537ef2",
-      measurementId: "G-2XNNL9MXLC"
-    };
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxhbi6weQsyGqVsf_AIrw9QR-Cn67VJhs",
+    authDomain: "mush-page.firebaseapp.com",
+    projectId: "mush-page",
+    storageBucket: "mush-page.appspot.com",
+    messagingSenderId: "935213953527",
+    appId: "1:935213953527:web:75911c5292c2b42c537ef2",
+    measurementId: "G-2XNNL9MXLC"
+  };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
 
-    // Owner email
-    const OWNER_EMAIL = "adebeshinmoshood@gmail.com"; // change to your real email
+  const OWNER_EMAIL = "adebeshinmoshood@gmail.com";
 
-    // Auth state
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        if (user.email === OWNER_EMAIL) {
-          document.getElementById("dashboard").style.display = "block";
-        }
-      } else {
-        // Show login button
-        document.getElementById("loginBtn").style.display = "block";
-      }
-    });
-
-    // Login button logic
-    document.getElementById("loginBtn").addEventListener("click", function() {
-      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    });
-
-    // Logout button logic
-    document.getElementById("logoutBtn").addEventListener("click", function() {
-      auth.signOut();
+  // Auth state listener
+  auth.onAuthStateChanged(user => {
+    if (user && user.email === OWNER_EMAIL) {
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("loginBtn").style.display = "none";
+    } else {
       document.getElementById("dashboard").style.display = "none";
       document.getElementById("loginBtn").style.display = "block";
-    });
+    }
+  });
 
-    // Upload content
-    async function uploadContent() {
-      const text = document.getElementById("textInput").value;
-      const file = document.getElementById("imageInput").files[0];
+  // Login
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  });
 
-      let imageUrl = "";
-      if (file) {
-        const storageRef = storage.ref("uploads/" + Date.now() + "_" + file.name);
-        await storageRef.put(file);
-        imageUrl = await storageRef.getDownloadURL();
-      }
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    auth.signOut();
+  });
 
-      await db.collection("uploads").add({
-        text,
-        imageUrl,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+  // Upload content
+  async function uploadContent() {
+    const text = document.getElementById("textInput").value;
+    const file = document.getElementById("imageInput").files[0];
 
-      document.getElementById("textInput").value = "";
-      document.getElementById("imageInput").value = "";
+    let imageUrl = "";
+    if (file) {
+      const storageRef = storage.ref("uploads/" + Date.now() + "_" + file.name);
+      await storageRef.put(file);
+      imageUrl = await storageRef.getDownloadURL();
     }
 
-    // Display uploads
-    db.collection("uploads")
-      .orderBy("createdAt", "desc")
-      .onSnapshot(snapshot => {
-        const uploadsDiv = document.getElementById("uploads");
-        uploadsDiv.innerHTML = "";
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const div = document.createElement("div");
-          div.className = "post";
-          div.innerHTML = `
-            <p>${data.text || ""}</p>
-            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Uploaded">` : ""}
-          `;
-          uploadsDiv.appendChild(div);
-        });
+    await db.collection("uploads").add({
+      text,
+      imageUrl,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    document.getElementById("textInput").value = "";
+    document.getElementById("imageInput").value = "";
+  }
+
+  // Display uploads<!-- Display uploads -->
+  db.collection("uploads")
+    .orderBy("createdAt", "desc")
+    .onSnapshot(snapshot => {
+      const uploadsDiv = document.getElementById("uploads");
+      uploadsDiv.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "post";
+
+        // Build the post HTML
+       let html = "";
+if (data.text) {
+  html += `<p>${data.text}</p>`;
+}
+if (data.imageUrl) {
+  html += `<img src="${data.imageUrl}" alt="Uploaded" style="max-width:100%; margin-top:8px;"/>`;
+}
+
+        div.innerHTML = html;
+        uploadsDiv.appendChild(div);
       });
-  </script>
+    }, error => {
+      console.error("Error fetching uploads:", error);
+    });
+</script>
 </body>
 </html>
 
