@@ -81,9 +81,7 @@
     }
     #openBtn {
       all: unset;
-      position: fixed;
-      top: 1.5vw;
-      right: 3vw;
+      margin-right:5vw;
       color: var(--main-dark);
       font-size: 5vw;
       cursor: pointer;
@@ -152,11 +150,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 90px;
+      padding-top: 0; /* Changed from 90px to 0 */
       width: 100vw;
     }
     .daa {
-      margin-top: 2vw;
+      margin-top: 9vw;
       background-image: url("images/caca.jpg");
       background-size: cover;
       background-repeat: no-repeat;
@@ -594,11 +592,12 @@
       .footer-logo img { width: auto; height: 10vw; }
     }
     @media screen and (max-width: 768px) {
-      header {  padding: 0 1vw; }
+      header {height: auto;padding-top: 1vw;padding-bottom: 1vw; }
       .dad { width:auto; height:8vw; }
       .dal { display: none; }
       #openBtn { display: block; }
       .container { padding-top: 60px; }
+      .daa{margin-top: 9vw;}
       .daa, .gg, .intro, .aboutus, .pta, .ptd, .last { width: 98vw; border-radius: 10px; }
       .a12{display: flex;flex-direction: column;}
       .a13, .a14 { font-size: 10vw; }
@@ -610,6 +609,7 @@
       .S { font-size: 6vw; }
       .ss { font-size: 5vw; }
       .sss { font-size: 4vw; }
+      .container{padding-top: 0;}
       .assd { width: 70vw; margin: 2vw 0; }
       .aboutus h1 { font-size: 7vw; }
       .aboutus h3 { font-size: 4vw; }
