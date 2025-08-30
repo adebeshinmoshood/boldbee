@@ -802,6 +802,8 @@
       </div>
     </section>
     <div id="uploadedContent"></div>
+    <!-- Where uploads will appear (above footer) -->
+    <div id="uploads"></div>
     <!-- Beautiful Footer Start -->
     <footer class="site-footer">
       <div class="footer-content">
@@ -827,18 +829,23 @@
     </footer>
     <!-- Beautiful Footer End -->
   </div>
-   <div id="dashboard">
+  <div id="dashboard">
     <h2>Owner Dashboard</h2>
     <input type="file" id="imageInput" accept="image/*"><br><br>
     <input type="text" id="textInput" placeholder="Enter text"><br><br>
     <button onclick="uploadContent()">Upload</button>
     <button id="logoutBtn">Logout</button>
   </div>
-
   <!-- Login button (for owner only) -->
   <button id="loginBtn">Owner Login</button>
 
+  <!-- Firebase SDKs (must be before your script) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
   <script>
+    // Sidebar logic
     const openBtn = document.getElementById('openBtn');
     const closeBtn = document.getElementById('closeBtn');
     const sidebar = document.getElementById('sidebar');
@@ -851,100 +858,102 @@
     window.addEventListener('scroll', () => {
       sidebar.classList.remove('active');
     });
+
+    // Loader logic
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
       setTimeout(() => {
         loader.style.display = 'none';
-      }, 2000); // Loader stays for 5 seconds
+      }, 5000); // Loader stays for 5 seconds
     });
-  // Firebase config (replace with your real config from   Firebase Console)
-    // firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
+    // Firebase config
+    // REMOVE ALL import ... from ... LINES BELOW! They are not valid in browser scripts.
 
-const app = initializeApp(firebaseConfig);
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxhbi6weQsyGqVsf_AIrw9QR-Cn67VJhs",
+      authDomain: "mush-page.firebaseapp.com",
+      projectId: "mush-page",
+      storageBucket: "mush-page.appspot.com",
+      messagingSenderId: "935213953527",
+      appId: "1:935213953527:web:75911c5292c2b42c537ef2",
+      measurementId: "G-2XNNL9MXLC"
+    };
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-  const OWNER_EMAIL = "adebeshinmoshood@gmail.com"; // only this Gmail can see dashboard
+    // Owner email
+    const OWNER_EMAIL = "adebeshinmoshood@gmail.com"; // change to your real email
 
-  // Login
-  document.getElementById("loginBtn").onclick = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
+    // Auth state
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        if (user.email === OWNER_EMAIL) {
+          document.getElementById("dashboard").style.display = "block";
+        }
+      } else {
+        // Show login button
+        document.getElementById("loginBtn").style.display = "block";
+      }
+    });
 
-  // Logout
-  document.getElementById("logoutBtn").onclick = () => {
-    auth.signOut();
-  };
+    // Login button logic
+    document.getElementById("loginBtn").addEventListener("click", function() {
+      auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    });
 
-  // Check login state
-  auth.onAuthStateChanged(user => {
-    if (user && user.email === OWNER_EMAIL) {
-      document.getElementById("dashboard").style.display = "block";
-      document.getElementById("loginBtn").style.display = "none";
-    } else {
+    // Logout button logic
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      auth.signOut();
       document.getElementById("dashboard").style.display = "none";
       document.getElementById("loginBtn").style.display = "block";
+    });
+
+    // Upload content
+    async function uploadContent() {
+      const text = document.getElementById("textInput").value;
+      const file = document.getElementById("imageInput").files[0];
+
+      let imageUrl = "";
+      if (file) {
+        const storageRef = storage.ref("uploads/" + Date.now() + "_" + file.name);
+        await storageRef.put(file);
+        imageUrl = await storageRef.getDownloadURL();
+      }
+
+      await db.collection("uploads").add({
+        text,
+        imageUrl,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      document.getElementById("textInput").value = "";
+      document.getElementById("imageInput").value = "";
     }
-  });
 
-  // Upload function
-  function uploadContent() {
-    let text = document.getElementById("textInput").value;
-    let imageInput = document.getElementById("imageInput").files[0];
-
-    if (imageInput) {
-      let reader = new FileReader();
-      reader.onload = function(e) {
-        db.ref("content").set({
-          text: text,
-          image: e.target.result
+    // Display uploads
+    db.collection("uploads")
+      .orderBy("createdAt", "desc")
+      .onSnapshot(snapshot => {
+        const uploadsDiv = document.getElementById("uploads");
+        uploadsDiv.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const div = document.createElement("div");
+          div.className = "post";
+          div.innerHTML = `
+            <p>${data.text || ""}</p>
+            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Uploaded">` : ""}
+          `;
+          uploadsDiv.appendChild(div);
         });
-      };
-      reader.readAsDataURL(imageInput);
-    } else {
-      db.ref("content").set({ text });
-    }
-  }
-
-  // Load content for everyone (ahead of footer)
-  db.ref("content").on("value", snapshot => {
-    let data = snapshot.val();
-    let contentDiv = document.getElementById("uploadedContent");
-    contentDiv.innerHTML = "";
-
-    if (data) {
-      if (data.text) {
-        let p = document.createElement("p");
-        p.textContent = data.text;
-        contentDiv.appendChild(p);
-      }
-      if (data.image) {
-        let img = document.createElement("img");
-        img.src = data.image;
-        img.style.maxWidth = "300px";
-        contentDiv.appendChild(img);
-      }
-    }
-  });
-
+      });
   </script>
 </body>
 </html>
-
 
