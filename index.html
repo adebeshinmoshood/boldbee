@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BoldBee // MultiFarm</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
   <style>
      #dashboard {
       display: none;
@@ -829,23 +833,28 @@
     </footer>
     <!-- Beautiful Footer End -->
   </div>
-  <div id="dashboard">
-    <h2>Owner Dashboard</h2>
-    <input type="file" id="imageInput" accept="image/*"><br><br>
-    <input type="text" id="textInput" placeholder="Enter text"><br><br>
-    <button onclick="uploadContent()">Upload</button>
-    <button id="logoutBtn">Logout</button>
-  </div>
+  
   <div class="uploads"></div>
   <!-- Login button (for owner only) -->
   <button id="loginBtn">Owner Login</button>
+  <div id="loginForm">
+  <input type="email" id="email" placeholder="Owner email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button id="loginBtn">Owner Login</button>
+</div>
+
+<!-- Owner Dashboard (hidden by default) -->
+<div id="dashboard" style="display:none;">
+  <h2>Owner Dashboard</h2>
+  <input type="file" id="imageInput" accept="image/*"><br><br>
+  <input type="text" id="textInput" placeholder="Enter text"><br><br>
+  <button onclick="uploadContent()">Upload</button>
+  <button id="logoutBtn">Logout</button>
+</div>
 
   <!-- Firebase SDKs (must be before your script) -->
  
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  
 
 <script>
     // Sidebar logic
@@ -962,7 +971,55 @@ if (data.imageUrl) {
     }, error => {
       console.error("Error fetching uploads:", error);
     });
+    // Initialize Firebase
+  
+
+
+  // Login button logic
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+        if (user.email === OWNER_EMAIL) {
+          // ✅ Show dashboard
+          document.getElementById("dashboard").style.display = "block";
+          document.getElementById("loginForm").style.display = "none";
+        } else {
+          alert("Not authorized.");
+          auth.signOut();
+        }
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  });
+
+  // Logout
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    auth.signOut().then(() => {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    });
+  });
+
+  // Keep owner logged in after refresh
+  auth.onAuthStateChanged(user => {
+    if (user && user.email === OWNER_EMAIL) {
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("loginForm").style.display = "none";
+    } else {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    }
+  });
 </script>
 </body>
 </html>
 
+
+  
+
+  
