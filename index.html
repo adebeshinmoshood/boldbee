@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BoldBee // MultiFarm</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
   <style>
      #dashboard {
       display: none;
@@ -31,6 +32,7 @@
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
+  display: none;
 }
 
 #showLoginBtn:hover {
@@ -685,7 +687,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      width :100%;
       height: 100%;
       background: rgba(255, 255, 255, 0.9);
       display: flex;
@@ -724,6 +726,71 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
+
+    /* Add this to your <style> block for beautiful post containers and delete button */
+.post-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+  margin: 2vw auto;
+  padding: 2vw;
+  max-width: 500px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+.post-container:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+}
+.post-text {
+  font-size: 1.2em;
+  color: #222;
+  margin-bottom: 1vw;
+  word-break: break-word;
+}
+.post-img {
+  margin-top: 1vw;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.delete-btn {
+  margin-top: 1vw;
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.delete-btn:hover {
+  background: #b52b27;
+}
+/* Add to your <style> block for bigger dashboard/login buttons */
+.big-btn {
+  font-size: 1.3em;
+  padding: 16px 32px;
+  border-radius: 10px;
+  background: var(--main-yellow);
+  color: #222;
+  border: none;
+  margin: 8px 10px 8px 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: inline-block;
+}
+.big-btn:hover {
+  background: var(--main-accent);
+  color: #fff;
+  transform: scale(1.05);
+}
   </style>
 </head>
 <body>
@@ -865,25 +932,29 @@
   </div>
   
   <!-- Button that shows the hidden owner login form -->
-<div id="loginSection">
-  <button id="showLoginBtn">👑 Owner Login</button>
-
+<div id="loginSection" style="text-align:center;">
+  <button id="showLoginBtn" style="display:none;visibility:hidden;">👑 Owner Login</button>
   <!-- Hidden Login Form -->
   <div id="loginForm" style="display: none;">
     <h2>Owner Login</h2>
     <input type="email" id="email" placeholder="Owner Email">
     <input type="password" id="password" placeholder="Password">
-    <button id="loginBtn">Login</button>
+    <button id="loginBtn" class="big-btn">Login</button>
   </div>
 </div>
 
 <!-- Owner Dashboard (hidden by default) -->
 <div id="dashboard" style="display:none;">
   <h2>Owner Dashboard</h2>
-  <input type="file" id="imageInput" accept="image/*"><br><br>
-  <input type="text" id="textInput" placeholder="Enter text"><br><br>
-  <button onclick="uploadContent()">Upload</button>
-  <button id="logoutBtn">Logout</button>
+  <label for="imageInput" class="big-btn" style="display:inline-block; cursor:pointer; margin-bottom:10px;">
+    <span>➕ Add Image</span>
+    <input type="file" id="imageInput" accept="image/*" style="display:none;">
+  </label>
+  <br><br>
+  <input type="text" id="textInput" placeholder="Enter text" style="font-size:1.2em; padding:10px; width:80%; max-width:400px;">
+  <br><br>
+  <button onclick="uploadContent()" class="big-btn">Upload</button>
+  <button id="logoutBtn" class="big-btn" style="background:#d9534f;">Logout</button>
 </div>
 
   <!-- Firebase SDKs (must be before your script) -->
@@ -891,15 +962,21 @@
   
 <script>
   // Initialize Firebase (must be outside DOMContentLoaded so it's available globally)
+      <!-- Firebase v8 SDKs -->
+
+
+
+  // Your Firebase v8 config
   const firebaseConfig = {
-    apiKey: "AIzaSyAxhbi6weQsyGqVsf_AIrw9QR-Cn67VJhs",
-    authDomain: "mush-page.firebaseapp.com",
-    projectId: "mush-page",
-    storageBucket: "mush-page.appspot.com",
-    messagingSenderId: "935213953527",
-    appId: "1:935213953527:web:75911c5292c2b42c537ef2",
-    measurementId: "G-2XNNL9MXLC"
+    apiKey: "AIzaSyAa0QkXWkZ1BMOIjmwcXJhD7H1nEYuuUgQ",
+    authDomain: "boldbee.firebaseapp.com",
+    projectId: "boldbee",
+    storageBucket: "boldbee.appspot.com", // <-- FIXED HERE
+    messagingSenderId: "142025156066",
+    appId: "1:142025156066:web:28ffdc8fc2147db08305bb",
+    measurementId: "G-J91WPRH7MM"
   };
+
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
@@ -924,19 +1001,21 @@
     let tapCount = 0;
     let tapTimer = null;
     const showLoginBtn = document.getElementById("showLoginBtn");
-    showLoginBtn.style.display = "none"; // Hide by default
+    showLoginBtn.style.display = "none";
+    showLoginBtn.style.visibility = "hidden"; // Hide by default
 
     document.body.addEventListener("click", function () {
       tapCount++;
       if (tapCount === 3) {
         showLoginBtn.style.display = "inline-block";
+        showLoginBtn.style.visibility = "visible";
         tapCount = 0;
         clearTimeout(tapTimer);
       } else {
         clearTimeout(tapTimer);
         tapTimer = setTimeout(() => {
           tapCount = 0;
-        }, 1000); // Reset if not tapped 3 times within 1s
+        }, 1000);
       }
     });
     // --- End tap logic ---
@@ -1018,17 +1097,33 @@
       document.getElementById("imageInput").value = "";
     };
 
-    // Display uploads
+    // Display uploads with delete button for owner and styled container
     db.collection("uploads").orderBy("createdAt", "desc").onSnapshot(snapshot => {
       const uploadsDiv = document.getElementById("uploads");
       uploadsDiv.innerHTML = "";
       snapshot.forEach(doc => {
         const data = doc.data();
         const div = document.createElement("div");
-        div.className = "post";
-        if (data.text) div.innerHTML += `<p>${data.text}</p>`;
-        if (data.imageUrl) div.innerHTML += `<img src="${data.imageUrl}" style="max-width:100%; margin-top:8px;"/>`;
+        div.className = "post-container";
+        let html = "";
+        if (data.text) html += `<p class="post-text">${data.text}</p>`;
+        if (data.imageUrl) html += `<img class="post-img" src="${data.imageUrl}" style="max-width:100%; margin-top:8px; border-radius:12px;"/>`;
+        // Show delete button only for owner
+        if (auth.currentUser && auth.currentUser.email === OWNER_EMAIL) {
+          html += `<button class="delete-btn" data-id="${doc.id}">Delete</button>`;
+        }
+        div.innerHTML = html;
         uploadsDiv.appendChild(div);
+      });
+
+      // Add delete event listeners
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = function() {
+          const id = this.getAttribute('data-id');
+          if (confirm("Delete this post?")) {
+            db.collection("uploads").doc(id).delete();
+          }
+        };
       });
     });
   });
