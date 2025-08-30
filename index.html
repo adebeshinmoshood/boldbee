@@ -82,7 +82,7 @@
     #openBtn {
       all: unset;
       position: fixed;
-      top: 1vw;
+      top: 1.5vw;
       right: 3vw;
       color: var(--main-dark);
       font-size: 5vw;
@@ -91,12 +91,11 @@
       z-index: 200;
       background: var(--main-yellow);
       border-radius: 20%;
-      width:auto;
-      padding-left: 1vw;
-      padding-right: 1vw;
+      width:7vw;
+      padding: 1vw;
       height:auto;
       text-align: center;
-      line-height: 48px;
+      
       box-shadow: 0 2px 8px rgba(0,0,0,0.10);
       transition: background 0.2s, color 0.2s;
     }
@@ -832,7 +831,9 @@
     });
     window.addEventListener('load', () => {
       const loader = document.getElementById('loader');
-      loader.style.display = 'none';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 5000); // Loader stays for 5 seconds
     });
   </script>
 </body>
