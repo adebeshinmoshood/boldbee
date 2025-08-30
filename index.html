@@ -17,6 +17,36 @@
       background: #111;
       color: #fff;
     }
+
+    #loginSection {
+  text-align: center;
+}
+
+#showLoginBtn {
+  padding: 12px 20px;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#showLoginBtn:hover {
+  background: #0056b3;
+}
+
+/* Make login form appear smoothly */
+#loginForm {
+  margin-top: 15px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
     :root {
       --main-yellow: #c3d500;
       --main-brown: burlywood;
@@ -834,13 +864,17 @@
     <!-- Beautiful Footer End -->
   </div>
   
-  <div class="uploads"></div>
-  <!-- Login button (for owner only) -->
-  <button id="loginBtn">Owner Login</button>
-  <div id="loginForm">
-  <input type="email" id="email" placeholder="Owner email"><br><br>
-  <input type="password" id="password" placeholder="Password"><br><br>
-  <button id="loginBtn">Owner Login</button>
+  <!-- Button that shows the hidden owner login form -->
+<div id="loginSection">
+  <button id="showLoginBtn">👑 Owner Login</button>
+
+  <!-- Hidden Login Form -->
+  <div id="loginForm" style="display: none;">
+    <h2>Owner Login</h2>
+    <input type="email" id="email" placeholder="Owner Email">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+  </div>
 </div>
 
 <!-- Owner Dashboard (hidden by default) -->
@@ -879,8 +913,6 @@
       }, 5000); // Loader stays for 5 seconds
     });
 
-    <!-- Firebase SDKs -->
-
   // Your Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyAxhbi6weQsyGqVsf_AIrw9QR-Cn67VJhs",
@@ -893,33 +925,62 @@
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const auth = firebase.auth();
   const db = firebase.firestore();
   const storage = firebase.storage();
 
   const OWNER_EMAIL = "adebeshinmoshood@gmail.com";
 
-  // Auth state listener
-  auth.onAuthStateChanged(user => {
-    if (user && user.email === OWNER_EMAIL) {
-      document.getElementById("dashboard").style.display = "block";
-      document.getElementById("loginBtn").style.display = "none";
-    } else {
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("loginBtn").style.display = "block";
-    }
+  // Show login form when button is clicked
+  document.getElementById("showLoginBtn").addEventListener("click", () => {
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("showLoginBtn").style.display = "none"; // hide button
   });
 
-  // Login
+  // Email/Password Login
   document.getElementById("loginBtn").addEventListener("click", () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+        if (user.email === OWNER_EMAIL) {
+          document.getElementById("dashboard").style.display = "block";
+          document.getElementById("loginForm").style.display = "none";
+        } else {
+          alert("Not authorized.");
+          auth.signOut();
+        }
+      })
+      .catch(error => {
+        alert(error.message);
+      });
   });
 
   // Logout
   document.getElementById("logoutBtn").addEventListener("click", () => {
-    auth.signOut();
+    auth.signOut().then(() => {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("showLoginBtn").style.display = "block";
+    });
+  });
+
+  // Keep owner logged in after refresh
+  auth.onAuthStateChanged(user => {
+    if (user && user.email === OWNER_EMAIL) {
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("showLoginBtn").style.display = "none";
+    } else {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("showLoginBtn").style.display = "block";
+    }
   });
 
   // Upload content
@@ -944,7 +1005,7 @@
     document.getElementById("imageInput").value = "";
   }
 
-  // Display uploads<!-- Display uploads -->
+  // Display uploads
   db.collection("uploads")
     .orderBy("createdAt", "desc")
     .onSnapshot(snapshot => {
@@ -957,13 +1018,13 @@
         div.className = "post";
 
         // Build the post HTML
-       let html = "";
-if (data.text) {
-  html += `<p>${data.text}</p>`;
-}
-if (data.imageUrl) {
-  html += `<img src="${data.imageUrl}" alt="Uploaded" style="max-width:100%; margin-top:8px;"/>`;
-}
+        let html = "";
+        if (data.text) {
+          html += `<p>${data.text}</p>`;
+        }
+        if (data.imageUrl) {
+          html += `<img src="${data.imageUrl}" alt="Uploaded" style="max-width:100%; margin-top:8px;"/>`;
+        }
 
         div.innerHTML = html;
         uploadsDiv.appendChild(div);
@@ -971,55 +1032,10 @@ if (data.imageUrl) {
     }, error => {
       console.error("Error fetching uploads:", error);
     });
-    // Initialize Firebase
-  
-
-
-  // Login button logic
-  document.getElementById("loginBtn").addEventListener("click", () => {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    auth.signInWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        if (user.email === OWNER_EMAIL) {
-          // ✅ Show dashboard
-          document.getElementById("dashboard").style.display = "block";
-          document.getElementById("loginForm").style.display = "none";
-        } else {
-          alert("Not authorized.");
-          auth.signOut();
-        }
-      })
-      .catch(error => {
-        alert(error.message);
-      });
-  });
-
-  // Logout
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    auth.signOut().then(() => {
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("loginForm").style.display = "block";
-    });
-  });
-
-  // Keep owner logged in after refresh
-  auth.onAuthStateChanged(user => {
-    if (user && user.email === OWNER_EMAIL) {
-      document.getElementById("dashboard").style.display = "block";
-      document.getElementById("loginForm").style.display = "none";
-    } else {
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("loginForm").style.display = "block";
-    }
-  });
 </script>
 </body>
 </html>
 
 
-  
 
-  
+
