@@ -6,6 +6,13 @@
   <title>BoldBee // MultiFarm</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
   <style>
+     #dashboard {
+      display: none;
+      margin-top: 50px;
+      padding: 20px;
+      background: #111;
+      color: #fff;
+    }
     :root {
       --main-yellow: #c3d500;
       --main-brown: burlywood;
@@ -794,6 +801,7 @@
         <img id="cod" class="dpp" src="images/cccc.jpg" alt="">
       </div>
     </section>
+    <div id="uploadedContent"></div>
     <!-- Beautiful Footer Start -->
     <footer class="site-footer">
       <div class="footer-content">
@@ -819,6 +827,17 @@
     </footer>
     <!-- Beautiful Footer End -->
   </div>
+   <div id="dashboard">
+    <h2>Owner Dashboard</h2>
+    <input type="file" id="imageInput" accept="image/*"><br><br>
+    <input type="text" id="textInput" placeholder="Enter text"><br><br>
+    <button onclick="uploadContent()">Upload</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <!-- Login button (for owner only) -->
+  <button id="loginBtn">Owner Login</button>
+
   <script>
     const openBtn = document.getElementById('openBtn');
     const closeBtn = document.getElementById('closeBtn');
@@ -838,6 +857,94 @@
         loader.style.display = 'none';
       }, 2000); // Loader stays for 5 seconds
     });
+  // Firebase config (replace with your real config from   Firebase Console)
+    // firebase.js
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+
+  const OWNER_EMAIL = "adebeshinmoshood@gmail.com"; // only this Gmail can see dashboard
+
+  // Login
+  document.getElementById("loginBtn").onclick = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
+
+  // Logout
+  document.getElementById("logoutBtn").onclick = () => {
+    auth.signOut();
+  };
+
+  // Check login state
+  auth.onAuthStateChanged(user => {
+    if (user && user.email === OWNER_EMAIL) {
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("loginBtn").style.display = "none";
+    } else {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginBtn").style.display = "block";
+    }
+  });
+
+  // Upload function
+  function uploadContent() {
+    let text = document.getElementById("textInput").value;
+    let imageInput = document.getElementById("imageInput").files[0];
+
+    if (imageInput) {
+      let reader = new FileReader();
+      reader.onload = function(e) {
+        db.ref("content").set({
+          text: text,
+          image: e.target.result
+        });
+      };
+      reader.readAsDataURL(imageInput);
+    } else {
+      db.ref("content").set({ text });
+    }
+  }
+
+  // Load content for everyone (ahead of footer)
+  db.ref("content").on("value", snapshot => {
+    let data = snapshot.val();
+    let contentDiv = document.getElementById("uploadedContent");
+    contentDiv.innerHTML = "";
+
+    if (data) {
+      if (data.text) {
+        let p = document.createElement("p");
+        p.textContent = data.text;
+        contentDiv.appendChild(p);
+      }
+      if (data.image) {
+        let img = document.createElement("img");
+        img.src = data.image;
+        img.style.maxWidth = "300px";
+        contentDiv.appendChild(img);
+      }
+    }
+  });
+
   </script>
 </body>
 </html>
+
+
