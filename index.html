@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BoldBee // MultiFarm</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
   <style>
      #dashboard {
       display: none;
@@ -598,6 +598,27 @@
       color: var(--main-accent);
       text-decoration: underline;
     }
+
+     /* Simple popup styling */
+    #popup {
+      width: 20vw;
+      display: none;
+      position: fixed;
+      top: 35%;
+      left: 14%;
+      transform: translate(-50%, -30%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    #popup a {
+      color: blue;
+      text-decoration:none;
+    }
+
+
     .footer-social {
       display: flex;
       gap: 1vw;
@@ -791,6 +812,19 @@
   color: #fff;
   transform: scale(1.05);
 }
+
+.v1{
+  width: 85vw;
+  display: flex;
+  border-radius: 2vw;
+  justify-content: center;
+  border: 5vw solid white;
+  padding: 2vw;
+  background-color: burlywood;
+}
+video{
+  width: 80vw;
+}
   </style>
 </head>
 <body>
@@ -906,6 +940,16 @@
     <!-- Where uploads will appear (above footer) -->
     <div id="uploads"></div>
     <!-- Beautiful Footer Start -->
+     <div class="v1">
+      <video controls autoplay muted loop> 
+        <source src="images/aaaa.mp4" type="video/mp4">
+
+      </video>
+
+     </div>
+
+
+
     <footer class="site-footer">
       <div class="footer-content">
         <div class="footer-logo">
@@ -928,22 +972,28 @@
         </div>
       </div>
     </footer>
+    
+
+  <!-- Popup Box -->
+  <div id="popup">
+    <p> Join our WhatsApp chanell for price updates</p>
+    <a  href="http" target="_blank">Go to chanell</a>
+  </div>
+
     <!-- Beautiful Footer End -->
-  </div>
-  
-  <!-- Button that shows the hidden owner login form -->
-<div id="loginSection" style="text-align:center;">
-  <button id="showLoginBtn" style="display:none;visibility:hidden;">👑 Owner Login</button>
-  <!-- Hidden Login Form -->
-  <div id="loginForm" style="display: none;">
-    <h2>Owner Login</h2>
-    <input type="email" id="email" placeholder="Owner Email">
-    <input type="password" id="password" placeholder="Password">
-    <button id="loginBtn" class="big-btn">Login</button>
-  </div>
+  </div> 
+
+
+   
+
+<!-- Login form (hidden by default) -->
+ <!------ <div id="loginForm" style="display:none;">
+  <h2>Owner Login</h2>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button id="loginBtn" class="big-btn">Login</button>
 </div>
 
-<!-- Owner Dashboard (hidden by default) -->
 <div id="dashboard" style="display:none;">
   <h2>Owner Dashboard</h2>
   <label for="imageInput" class="big-btn" style="display:inline-block; cursor:pointer; margin-bottom:10px;">
@@ -951,187 +1001,270 @@
     <input type="file" id="imageInput" accept="image/*" style="display:none;">
   </label>
   <br><br>
-  <input type="text" id="textInput" placeholder="Enter text" style="font-size:1.2em; padding:10px; width:80%; max-width:400px;">
+  <input type="text" id="textInput" placeholder="Enter text" 
+         style="font-size:1.2em; padding:10px; width:80%; max-width:400px;">
   <br><br>
-  <button onclick="uploadContent()" class="big-btn">Upload</button>
+  <button id="uploadBtn" class="big-btn">Upload</button>
   <button id="logoutBtn" class="big-btn" style="background:#d9534f;">Logout</button>
 </div>
+<button id="showLoginBtn" style="display:none;">Owner Login</button> ---->
 
-  <!-- Firebase SDKs (must be before your script) -->
- 
-  
 <script>
-  // Initialize Firebase (must be outside DOMContentLoaded so it's available globally)
-      <!-- Firebase v8 SDKs -->
+  
+    window.addEventListener("load", function() {
+      document.getElementById("popup").style.display = "block";
+});
 
+        window.addEventListener('scroll', () =>{
+          popup.style.display='none'
+  
+ })
 
+ // --------- Exit Intent Detection ---------
+let exitShown = false;
+document.addEventListener("mouseleave", function(event) {
+  if (!exitShown && event.clientY < 10) {
+    document.getElementById("popup").style.display = "block";
+    exitShown = true;
+  }
+});
 
-  // Your Firebase v8 config
-  const firebaseConfig = {
-    apiKey: "AIzaSyAa0QkXWkZ1BMOIjmwcXJhD7H1nEYuuUgQ",
-    authDomain: "boldbee.firebaseapp.com",
-    projectId: "boldbee",
-    storageBucket: "boldbee.appspot.com", // <-- FIXED HERE
-    messagingSenderId: "142025156066",
-    appId: "1:142025156066:web:28ffdc8fc2147db08305bb",
-    measurementId: "G-J91WPRH7MM"
-  };
+// --------- Scroll Stop Detection ---------
+let scrollTimer;
+window.addEventListener("scroll", function() {
+  clearTimeout(scrollTimer);
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-  const storage = firebase.storage();
-  const OWNER_EMAIL = "adebeshinmoshood@gmail.com";
+  scrollTimer = setTimeout(function() {
+    // Add new item to the list
+    let li = document.createElement("li");
+    li.textContent = "Extra advantage unlocked 🔑";
+    document.getElementById("advent-list").appendChild(li);
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Sidebar logic
-    const openBtn = document.getElementById('openBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const sidebar = document.getElementById('sidebar');
-    openBtn.addEventListener('click', () => sidebar.classList.add('active'));
-    closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
-    window.addEventListener('scroll', () => sidebar.classList.remove('active'));
+    // Show scroll popup
+    let popup = document.getElementById("popup");
+    popup.style.display = "block";
 
-    // Loader
-    window.addEventListener('load', () => {
-      setTimeout(() => document.getElementById('loader').style.display = 'none', 2000);
-    });
+    // Hide after 2 seconds
+    setTimeout(() => popup.style.display = "none", 2000);
+  }, 1000); // 1 second after scroll stops
+});
+      
+    
+  
+   const openBtn = document.getElementById('openBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const sidebar = document.getElementById('sidebar');
+  openBtn.addEventListener('click', () => {
+    sidebar.classList.add('active');
+  });
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+  });
+ window.addEventListener('scroll', () =>{
+  sidebar.classList.remove('active')
+ })
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 5000); // Loader stays for 5 seconds
+  });
 
-    // --- Tap 3 times to show owner login ---
-    let tapCount = 0;
-    let tapTimer = null;
-    const showLoginBtn = document.getElementById("showLoginBtn");
-    showLoginBtn.style.display = "none";
-    showLoginBtn.style.visibility = "hidden"; // Hide by default
+</script>
+<script>
+// ================== Firebase Config ==================
+const firebaseConfig = {
+  apiKey: "AIzaSyAa0QkXWkZ1BMOIjmwcXJhD7H1nEYuuUgQ",
+  authDomain: "boldbee.firebaseapp.com",
+  projectId: "boldbee",
+  storageBucket: "boldbee.appspot.com",
+  messagingSenderId: "142025156066",
+  appId: "1:142025156066:web:28ffdc8fc2147db08305bb",
+  measurementId: "G-J91WPRH7MM"
+};
 
-    document.body.addEventListener("click", function () {
-      tapCount++;
-      if (tapCount === 3) {
-        showLoginBtn.style.display = "inline-block";
-        showLoginBtn.style.visibility = "visible";
-        tapCount = 0;
-        clearTimeout(tapTimer);
-      } else {
-        clearTimeout(tapTimer);
-        tapTimer = setTimeout(() => {
-          tapCount = 0;
-        }, 1000);
-      }
-    });
-    // --- End tap logic ---
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const OWNER_EMAIL = "adebeshinmoshood@gmail.com";
 
-    const loginForm = document.getElementById("loginForm");
-    const dashboard = document.getElementById("dashboard");
+// ================== Cloudinary Config ==================
+const cloudName = "dc5l1vu5y"; 
+const uploadPreset = "Boldbee"; // ⚠ Must match exactly in Cloudinary
 
-    showLoginBtn.addEventListener("click", () => {
-      loginForm.style.display = "block";
-      showLoginBtn.style.display = "none";
-    });
+// ================== DOM Elements ==================
+const imageInput = document.getElementById("imageInput");
+const textInput = document.getElementById("textInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const uploadsDiv = document.getElementById("uploads");
+const showLoginBtn = document.getElementById("showLoginBtn");
+const loginForm = document.getElementById("loginForm");
+const dashboard = document.getElementById("dashboard");
+let currentUser = null;
 
-    // Login
-    document.getElementById("loginBtn").addEventListener("click", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+// ================== Triple tap to show login ==================
+let tapCount = 0;
+let tapTimer = null;
+showLoginBtn.style.display = "none";
 
-      if (!email || !password) {
-        return alert("Please enter both email and password.");
-      }
+document.body.addEventListener("click", function () {
+  tapCount++;
+  if (tapCount === 3) {
+    showLoginBtn.style.display = "inline-block";
+    tapCount = 0;
+    clearTimeout(tapTimer);
+  } else {
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
+  }
+});
 
-      auth.signInWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          const user = userCredential.user;
-          if (user.email === OWNER_EMAIL) {
-            dashboard.style.display = "block";
-            loginForm.style.display = "none";
-            showLoginBtn.style.display = "none";
-          } else {
-            alert("Not authorized.");
-            auth.signOut();
-          }
-        })
-        .catch(error => alert(error.message));
-    });
+showLoginBtn.addEventListener("click", () => {
+  loginForm.style.display = "block";
+  showLoginBtn.style.display = "none";
+});
 
-    // Logout
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      auth.signOut().then(() => {
-        dashboard.style.display = "none";
-        loginForm.style.display = "none";
-        showLoginBtn.style.display = "block";
-      });
-    });
+// ================== Owner Login ==================
+document.getElementById("loginBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  if (!email || !password) return alert("Please enter both email and password.");
 
-    // Keep logged in after refresh
-    auth.onAuthStateChanged(user => {
-      if (user && user.email === OWNER_EMAIL) {
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      const user = userCredential.user;
+      if (user.email === OWNER_EMAIL) {
         dashboard.style.display = "block";
         loginForm.style.display = "none";
         showLoginBtn.style.display = "none";
+        currentUser = user;
+        loadUploads();
       } else {
-        dashboard.style.display = "none";
-        loginForm.style.display = "none";
-        showLoginBtn.style.display = "block";
+        alert("Not authorized.");
+        auth.signOut();
       }
-    });
+    })
+    .catch(error => alert(error.message));
+});
 
-    // Upload function
-    window.uploadContent = async function() {
-      const text = document.getElementById("textInput").value;
-      const file = document.getElementById("imageInput").files[0];
-      let imageUrl = "";
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  auth.signOut().then(() => {
+    dashboard.style.display = "none";
+    loginForm.style.display = "none";
+    showLoginBtn.style.display = "block";
+    currentUser = null;
+  });
+});
 
-      if (file) {
-        const storageRef = storage.ref("uploads/" + Date.now() + "_" + file.name);
-        await storageRef.put(file);
-        imageUrl = await storageRef.getDownloadURL();
-      }
+auth.onAuthStateChanged(user => {
+  if (user && user.email === OWNER_EMAIL) {
+    dashboard.style.display = "block";
+    loginForm.style.display = "none";
+    showLoginBtn.style.display = "none";
+    currentUser = user;
+    loadUploads();
+  } else {
+    dashboard.style.display = "none";
+    loginForm.style.display = "none";
+    showLoginBtn.style.display = "block";
+    currentUser = null;
+  }
+});
 
-      await db.collection("uploads").add({
-        text,
-        imageUrl,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+// ================== Cloudinary Upload ==================
+function uploadImageToCloudinary(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", uploadPreset);
 
-      document.getElementById("textInput").value = "";
-      document.getElementById("imageInput").value = "";
-    };
+  return fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Cloudinary response:", data); // 👀 See the full response
+    if (data.secure_url) {
+      return data.secure_url;
+    } else {
+      throw new Error(data.error?.message || "Cloudinary upload failed");
+    }
+  })
+  .catch(err => {
+    console.error("Cloudinary upload error:", err);
+    alert("Cloudinary error: " + err.message);
+  });
+}
+// ================== Upload Button ==================
+uploadBtn.addEventListener("click", function() {
+  if (!currentUser) return alert("You must be logged in to upload.");
+  const file = imageInput.files[0];
+  const text = textInput.value.trim();
+  if (!text && !file) return alert("Please provide text or image to upload.");
 
-    // Display uploads with delete button for owner and styled container
-    db.collection("uploads").orderBy("createdAt", "desc").onSnapshot(snapshot => {
-      const uploadsDiv = document.getElementById("uploads");
-      uploadsDiv.innerHTML = "";
-      snapshot.forEach(doc => {
+  if (file) {
+    uploadImageToCloudinary(file)
+      .then(url => saveToFirestore(text, url))
+      .catch(err => { console.error(err); alert("Image upload failed"); });
+  } else {
+    saveToFirestore(text, null);
+  }
+});
+
+function saveToFirestore(text, imageUrl) {
+  db.collection("uploads").add({
+    uid: currentUser.uid,
+    text: text,
+    imageUrl: imageUrl || null,
+    timestamp: Date.now()
+  })
+  .then(() => {
+    textInput.value = "";
+    imageInput.value = "";
+    loadUploads();
+  })
+  .catch(err => console.error(err));
+}
+
+// ================== Load Posts ==================
+function loadUploads() {
+  uploadsDiv.innerHTML = "";
+  db.collection("uploads").orderBy("timestamp", "desc").get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
         const data = doc.data();
         const div = document.createElement("div");
         div.className = "post-container";
+
         let html = "";
         if (data.text) html += `<p class="post-text">${data.text}</p>`;
-        if (data.imageUrl) html += `<img class="post-img" src="${data.imageUrl}" style="max-width:100%; margin-top:8px; border-radius:12px;"/>`;
-        // Show delete button only for owner
-        if (auth.currentUser && auth.currentUser.email === OWNER_EMAIL) {
+        if (data.imageUrl) html += `<img class="post-img" src="${data.imageUrl}" />`;
+
+        if (currentUser && currentUser.email === OWNER_EMAIL) {
           html += `<button class="delete-btn" data-id="${doc.id}">Delete</button>`;
         }
+
         div.innerHTML = html;
         uploadsDiv.appendChild(div);
       });
 
-      // Add delete event listeners
       document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.onclick = function() {
           const id = this.getAttribute('data-id');
           if (confirm("Delete this post?")) {
-            db.collection("uploads").doc(id).delete();
+            db.collection("uploads").doc(id).delete().then(loadUploads);
           }
         };
       });
-    });
-  });
-</script>
+    })
+    .catch(err => console.error(err));
+}
 
+
+</script>
 </body>
 </html>
-
 
 
 
