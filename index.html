@@ -601,22 +601,33 @@
 
      /* Simple popup styling */
     #popup {
-      width: 20vw;
-      display: none;
+      width: 30vw;
+      height:1vw;
+
+      text-align: center;
+      display:flex;
+      justify-content: center;
+      align-items: center;
       position: fixed;
+      border-radius:5vw;
       top: 35%;
-      left: 14%;
+      left: 85%;
       transform: translate(-50%, -30%);
       background: white;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 2vw;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       text-align: center;
+      
     }
     #popup a {
       color: blue;
       text-decoration:none;
+      font-size: 1.5vw;
     }
+
+    
+     
+    
 
 
     .footer-social {
@@ -976,8 +987,7 @@ video{
 
   <!-- Popup Box -->
   <div id="popup">
-    <p> Join our WhatsApp chanell for price updates</p>
-    <a  href="http" target="_blank">Go to chanell</a>
+    <a  href="https://whatsapp.com/channel/0029Vb6nEc9Ae5VmgFeuP62I" target="_blank">Join our chanell for price updates</a>
   </div>
 
     <!-- Beautiful Footer End -->
@@ -1015,11 +1025,7 @@ video{
       document.getElementById("popup").style.display = "block";
 });
 
-        window.addEventListener('scroll', () =>{
-          popup.style.display='none'
-  
- })
-
+        
  // --------- Exit Intent Detection ---------
 let exitShown = false;
 document.addEventListener("mouseleave", function(event) {
