@@ -603,9 +603,9 @@
     #popup {
       width: 30vw;
       height:auto;
-
       text-align: center;
       display:flex;
+      text-decoration: none;
       justify-content: center;
       align-items: center;
       position: fixed;
@@ -619,10 +619,12 @@
       text-align: center;
       
     }
-    #popup a {
+    .vc44{
       color: blue;
       text-decoration:none;
-      font-size: 1.5vw;
+      font-size: 2vw;
+      font-weight: lighter;
+      text-transform: capitalize;
     }
 
     
@@ -668,7 +670,7 @@
       .footer-logo img { width: auto; height: 10vw; }
     }
     @media screen and (max-width: 768px) {
-
+       .vc44{font-size: 3vw;}
       header {height: auto;padding-top: 1vw;padding-bottom: 1vw; }
       .dad { width:auto; height:8vw; }
       .dal { display: none; }
@@ -987,12 +989,10 @@ video{
     
 
   <!-- Popup Box -->
-  <div id="popup">
-    <a  href="https://whatsapp.com/channel/0029Vb6nEc9Ae5VmgFeuP62I" target="_blank">Join our chanell for price updates</a>
+ <a id="popup" href="https://whatsapp.com/channel/0029Vb6nEc9Ae5VmgFeuP62I">
+    <div class="vc44">join our channel
   </div>
-
-    <!-- Beautiful Footer End -->
-  </div> 
+  </a>
 
 
    
